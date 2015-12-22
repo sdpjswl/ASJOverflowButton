@@ -11,12 +11,13 @@
 
 static NSString *const kCellIdentifier = @"cell";
 
-@interface ASJOverflowMenu () <UITableViewDataSource, UITableViewDelegate>
+@interface ASJOverflowMenu () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
 - (void)setupTable;
+- (void)setupContentView;
 - (UITableViewCell *)customisedCellFromCell:(UITableViewCell *)cell;
 - (void)reloadTable;
 
@@ -27,6 +28,7 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)awakeFromNib
 {
   [self setupTable];
+  [self setupContentView];
 }
 
 - (void)layoutSubviews
@@ -39,14 +41,43 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setupTable
 {
-  _contentView.backgroundColor = [UIColor clearColor];
   _itemsTableView.backgroundColor = [UIColor clearColor];
   _itemsTableView.tableFooterView = [[UIView alloc] init];
   _itemsTableView.delaysContentTouches = NO;
+  _itemsTableView.bounces = NO;
+  _itemsTableView.clipsToBounds = YES;
   _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   Class cellClass = [UITableViewCell class];
   [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
+}
+
+- (void)setupContentView
+{
+  _contentView.backgroundColor = [UIColor clearColor];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
+  tap.delegate = self;
+  [_contentView addGestureRecognizer:tap];
+}
+
+#pragma mark - Touch handling
+
+- (void)contentViewTapped:(UITapGestureRecognizer *)tap
+{
+  [self removeView];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+  // thanks to: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
+  // don't allow content view's tap gesture to be detected inside table view
+  CGPoint location = [touch locationInView:self];
+  UIView *view = [self hitTest:location withEvent:nil];
+  if ([view isDescendantOfView:_itemsTableView])
+  {
+    return NO;
+  }
+  return YES;
 }
 
 #pragma mark - Property setters
@@ -62,7 +93,7 @@ static NSString *const kCellIdentifier = @"cell";
   CGRect frame = _itemsTableView.bounds;
   frame.size.height = 44 * _items.count;
   UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:frame];
-  _itemsTableView.layer.masksToBounds = NO;
+  _itemsTableView.layer.masksToBounds = YES;
   _itemsTableView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
   _itemsTableView.layer.shadowOffset = CGSizeMake(0, 0);
   _itemsTableView.layer.shadowOpacity = 0.5;
@@ -116,8 +147,9 @@ static NSString *const kCellIdentifier = @"cell";
   
   ASJOverflowItem *item = _items[indexPath.row];
   cell.textLabel.text = item.name;
-  if (item.imageName) {
-    cell.imageView.image = [UIImage imageNamed:item.imageName];
+  if (item.image)
+  {
+    cell.imageView.image = item.image;
   }
   return cell;
 }
@@ -169,41 +201,13 @@ static NSString *const kCellIdentifier = @"cell";
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - Touch handler
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-  [super touchesBegan:touches withEvent:event];
-  [self removeView];
-}
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-  // check if a row was hit
-  CGPoint newPoint = [self convertPoint:point toView:_itemsTableView];
-  NSIndexPath *indexPath = [_itemsTableView indexPathForRowAtPoint:newPoint];
-  if (!indexPath)
-  {
-#warning called twice on tapping outside cells
-    NSLog(@"here");
-    [self removeView];
-    return nil;
-  }
-  return [super hitTest:point withEvent:event];
-}
-
 #pragma mark - Removal
 
 - (void)removeView
 {
-  [UIView animateWithDuration:0.4
-                        delay:0.0
-                      options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     self.alpha = 0.0;
-                   } completion:^(BOOL finished) {
-                     [self removeFromSuperview];
-                   }];
+  if (_menuRemoveBlock) {
+    _menuRemoveBlock();
+  }
 }
 
 @end

@@ -12,7 +12,6 @@
 		C0080AD41C282D4F0009488F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0080AD31C282D4F0009488F /* ViewController.m */; };
 		C0080AD71C282D4F0009488F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0080AD51C282D4F0009488F /* Main.storyboard */; };
 		C0080AD91C282D4F0009488F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0080AD81C282D4F0009488F /* Assets.xcassets */; };
-		C0080ADC1C282D4F0009488F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0080ADA1C282D4F0009488F /* LaunchScreen.storyboard */; };
 		C0080AE61C282ED60009488F /* ASJOverflowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C0080AE51C282ED60009488F /* ASJOverflowButton.m */; };
 		C0080AE91C282F620009488F /* ASJOverflowMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C0080AE81C282F620009488F /* ASJOverflowMenu.m */; };
 		C0080AEB1C282F6C0009488F /* ASJOverflowMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0080AEA1C282F6C0009488F /* ASJOverflowMenu.xib */; };
@@ -27,7 +26,6 @@
 		C0080AD31C282D4F0009488F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C0080AD61C282D4F0009488F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C0080AD81C282D4F0009488F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C0080ADB1C282D4F0009488F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0080ADD1C282D4F0009488F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0080AE41C282ED60009488F /* ASJOverflowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASJOverflowButton.h; sourceTree = "<group>"; };
 		C0080AE51C282ED60009488F /* ASJOverflowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASJOverflowButton.m; sourceTree = "<group>"; };
@@ -73,7 +71,6 @@
 				C0080AD31C282D4F0009488F /* ViewController.m */,
 				C0080AD51C282D4F0009488F /* Main.storyboard */,
 				C0080AD81C282D4F0009488F /* Assets.xcassets */,
-				C0080ADA1C282D4F0009488F /* LaunchScreen.storyboard */,
 				C0080ADD1C282D4F0009488F /* Info.plist */,
 				C0080ACC1C282D4F0009488F /* Supporting Files */,
 			);
@@ -158,7 +155,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0080ADC1C282D4F0009488F /* LaunchScreen.storyboard in Resources */,
 				C0080AD91C282D4F0009488F /* Assets.xcassets in Resources */,
 				C0080AD71C282D4F0009488F /* Main.storyboard in Resources */,
 				C0080AEB1C282F6C0009488F /* ASJOverflowMenu.xib in Resources */,
@@ -189,14 +185,6 @@
 				C0080AD61C282D4F0009488F /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C0080ADA1C282D4F0009488F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C0080ADB1C282D4F0009488F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

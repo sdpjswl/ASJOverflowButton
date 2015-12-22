@@ -14,10 +14,10 @@ typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 
 @interface ASJOverflowButton : UIBarButtonItem
 
+@property (assign, nonatomic) BOOL shouldDimBackground;
 @property (strong, nonatomic) UIColor *menuBackgroundColor;
 @property (strong, nonatomic) UIColor *itemTextColor;
 @property (strong, nonatomic) UIFont *itemFont;
-@property (assign, nonatomic) BOOL shouldDimBackground;
 @property (copy) ItemTapBlock itemTapBlock;
 
 - (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray *)items;
@@ -28,8 +28,8 @@ typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 @interface ASJOverflowItem : NSObject
 
 @property (copy, nonatomic) NSString *name;
-@property (copy, nonatomic) NSString *imageName;
+@property (strong, nonatomic) UIImage *image;
 
-+ (ASJOverflowItem *)itemWithName:(NSString *)name imageName:(NSString *)imageName;
++ (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image;
 
 @end

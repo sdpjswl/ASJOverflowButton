@@ -11,6 +11,7 @@
 @class ASJOverflowItem;
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
+typedef void (^MenuRemoveBlock)();
 
 @interface ASJOverflowMenu : UIView
 
@@ -20,7 +21,9 @@ typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 @property (strong, nonatomic) UIFont *itemFont;
 @property (assign, nonatomic) BOOL shouldDimBackground;
 @property (copy) ItemTapBlock itemTapBlock;
+@property (copy) MenuRemoveBlock menuRemoveBlock;
 
 - (void)setItemTapBlock:(ItemTapBlock)itemTapBlock;
+- (void)setMenuRemoveBlock:(MenuRemoveBlock)menuRemoveBlock;
 
 @end

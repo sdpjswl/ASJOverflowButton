@@ -17,9 +17,12 @@
 
 - (UIButton *)buttonWithImage:(UIImage *)image;
 - (void)setup;
-- (void)setupOverflowMenu;
 - (void)validateItems;
+- (void)setupOverflowMenu;
+- (void)handleOverflowBlocks;
 - (void)overflowButtonTapped:(id)sender;
+- (void)showMenu;
+- (void)hideMenu;
 
 @end
 
@@ -57,7 +60,7 @@
     ASJOverflowItem *itemObject = (ASJOverflowItem *)item;
     BOOL nilCheck = (itemObject.name != nil);
     if (!nilCheck) {
-      NSAssert(nilCheck, @"ASJOverflowItem property 'name' must not be nil. 'imageName' however is optional.");
+      NSAssert(nilCheck, @"ASJOverflowItem property 'name' must not be nil. 'image' however is optional.");
     }
   }
 }
@@ -70,11 +73,20 @@
   _overflowMenu.items = _items;
   _overflowMenu.alpha = 0.0;
   
+  [self handleOverflowBlocks];
+}
+
+- (void)handleOverflowBlocks
+{
   __weak typeof(self) weakSelf = self;
   [_overflowMenu setItemTapBlock:^(ASJOverflowItem *item, NSInteger idx) {
     if (weakSelf.itemTapBlock) {
       weakSelf.itemTapBlock(item, idx);
     }
+  }];
+  
+  [_overflowMenu setMenuRemoveBlock:^{
+    [weakSelf hideMenu];
   }];
 }
 
@@ -91,13 +103,7 @@
 
 - (void)overflowButtonTapped:(id)sender
 {
-  [_targetController.view addSubview:_overflowMenu];
-  [UIView animateWithDuration:0.4
-                        delay:0.0
-                      options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     _overflowMenu.alpha = 1.0;
-                   } completion:nil];
+  [self showMenu];
 }
 
 #pragma mark - Property setters
@@ -122,15 +128,36 @@
   _overflowMenu.shouldDimBackground = shouldDimBackground;
 }
 
+#pragma mark - Show/hide
+
+- (void)showMenu
+{
+  [_targetController.view addSubview:_overflowMenu];
+  [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^{
+                     _overflowMenu.alpha = 1.0;
+                   } completion:nil];
+}
+
+- (void)hideMenu
+{
+  [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^{
+                     _overflowMenu.alpha = 0.0;
+                   } completion:^(BOOL finished) {
+                     [_overflowMenu removeFromSuperview];
+                   }];
+}
+
 @end
 
 @implementation ASJOverflowItem
 
-+ (ASJOverflowItem *)itemWithName:(NSString *)name imageName:(NSString *)imageName
++ (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image
 {
   ASJOverflowItem *item = [[ASJOverflowItem alloc] init];
   item.name = name;
-  item.imageName = imageName;
+  item.image = image;
   return item;
 }
 
