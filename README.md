@@ -36,7 +36,7 @@ The are a few properties to customise the look and feel of the overflow menu.
 ![alt tag](Screenshot.png)
 
 ###To-do
-- ~Menu closes abruptly when tapped outside~
+- ~~Menu closes abruptly when tapped outside~~
 - Some way to adjust width of the menu
 
 # License
