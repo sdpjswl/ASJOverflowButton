@@ -1,4 +1,4 @@
-//  ASJOverflowMenu.h
+// ASJOverflowMenu.h
 //
 // Copyright (c) 2015 Sudeep Jaiswal
 //
@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @class ASJOverflowItem;
 
