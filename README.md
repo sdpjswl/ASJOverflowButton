@@ -4,7 +4,7 @@ Working on projects that are simultanously being developed on both iOS and Andro
 
 # Installation
 
-Cocoapods is the preferred way to install this library. Add this command to your `Podfile`:
+CocoaPods is the preferred way to install this library. Add this command to your `Podfile`:
 
 ```
 pod 'ASJOverflowButton'
