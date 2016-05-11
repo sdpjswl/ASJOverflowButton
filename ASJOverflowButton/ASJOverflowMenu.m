@@ -161,8 +161,7 @@ static NSString *const kCellIdentifier = @"cell";
   
   ASJOverflowItem *item = _items[indexPath.row];
   cell.textLabel.text = item.name;
-  if (item.image)
-  {
+  if (item.image) {
     cell.imageView.image = item.image;
   }
   return cell;

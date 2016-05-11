@@ -24,20 +24,24 @@
 
 @class ASJOverflowItem;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 typedef void (^MenuRemoveBlock)();
 
 @interface ASJOverflowMenu : UIView
 
 @property (copy, nonatomic) NSArray *items;
-@property (strong, nonatomic) UIColor *menuBackgroundColor;
-@property (strong, nonatomic) UIColor *itemTextColor;
-@property (strong, nonatomic) UIFont *itemFont;
+@property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+@property (nullable, strong, nonatomic) UIColor *itemTextColor;
+@property (nullable, strong, nonatomic) UIFont *itemFont;
 @property (assign, nonatomic) BOOL shouldDimBackground;
-@property (copy) ItemTapBlock itemTapBlock;
-@property (copy) MenuRemoveBlock menuRemoveBlock;
+@property (nullable, copy) ItemTapBlock itemTapBlock;
+@property (nullable, copy) MenuRemoveBlock menuRemoveBlock;
 
-- (void)setItemTapBlock:(ItemTapBlock)itemTapBlock;
-- (void)setMenuRemoveBlock:(MenuRemoveBlock)menuRemoveBlock;
+- (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;
+- (void)setMenuRemoveBlock:(MenuRemoveBlock _Nullable)menuRemoveBlock;
 
 @end
+
+NS_ASSUME_NONNULL_END

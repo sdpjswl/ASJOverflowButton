@@ -42,8 +42,12 @@
 
 @implementation ASJOverflowButton
 
-- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray *)items
+- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(nonnull NSArray<ASJOverflowItem *> *)items
 {
+  NSAssert(target, @"You must provide a UIViewController as target.");
+  NSAssert(image, @"You must provide an image for the Overflow button.");
+  NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
+  
   UIButton *btn = [self buttonWithImage:image];
   self = [super initWithCustomView:btn];
   if (self) {

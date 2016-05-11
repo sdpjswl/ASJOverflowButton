@@ -24,26 +24,30 @@
 
 @class ASJOverflowItem;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 
 @interface ASJOverflowButton : UIBarButtonItem
 
 @property (assign, nonatomic) BOOL shouldDimBackground;
-@property (strong, nonatomic) UIColor *menuBackgroundColor;
-@property (strong, nonatomic) UIColor *itemTextColor;
-@property (strong, nonatomic) UIFont *itemFont;
-@property (copy) ItemTapBlock itemTapBlock;
+@property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+@property (nullable, strong, nonatomic) UIColor *itemTextColor;
+@property (nullable, strong, nonatomic) UIFont *itemFont;
+@property (nullable, copy) ItemTapBlock itemTapBlock;
 
-- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray *)items;
-- (void)setItemTapBlock:(ItemTapBlock)itemTapBlock;
+- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items;
+- (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;
 
 @end
 
 @interface ASJOverflowItem : NSObject
 
 @property (copy, nonatomic) NSString *name;
-@property (strong, nonatomic) UIImage *image;
+@property (nullable, strong, nonatomic) UIImage *image;
 
-+ (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image;
++ (ASJOverflowItem *)itemWithName:(NSString *)name image:(nullable UIImage *)image;
 
 @end
+
+NS_ASSUME_NONNULL_END
