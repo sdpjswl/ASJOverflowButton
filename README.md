@@ -52,4 +52,4 @@ Can ONLY show the overflow menu on the top right corner of the screen.
 
 # License
 
-ASJOverflowButton is available under the MIT license. See the LICENSE file for more info.
+`ASJOverflowButton` is available under the MIT license. See the LICENSE file for more info.
