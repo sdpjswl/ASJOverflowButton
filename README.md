@@ -29,26 +29,28 @@ The are a few properties to customise the look and feel of the overflow menu.
 
 ```objc
 @property (assign, nonatomic) BOOL shouldDimBackground;
-@property (strong, nonatomic) UIColor *menuBackgroundColor;
-@property (strong, nonatomic) UIColor *itemTextColor;
-@property (strong, nonatomic) UIFont *itemFont;
+@property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+@property (nullable, strong, nonatomic) UIColor *itemTextColor;
+@property (nullable, strong, nonatomic) UIFont *itemFont;
 ```
 
 ![alt tag](Screenshot.png)
 
 ### Limitation
+
 Can ONLY show the overflow menu on the top right corner of the screen.
 
-### To-do
+# To-do
+
 - ~~Menu closes abruptly when tapped outside~~
 - Menu should close when tapped on the clear table view outside the items (BUG)
 - Allow a menu to be created with a title
 - Some way to adjust width of the menu
 - Maybe some way to show menu on both, left and right sides?
 
-### Thanks
+# Credits
 
-- To [this answer from Stack Overflow](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt) which helped me fix an issue where taps on overflow menu's items would be consumed by the background view's tap gesture.
+- To [this answer on Stack Overflow](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt) which helped me fix an issue where taps on overflow menu's items would be consumed by the background view's tap gesture.
 
 # License
 
