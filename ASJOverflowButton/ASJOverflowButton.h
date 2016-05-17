@@ -28,25 +28,86 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
+typedef void (^MenuRemoveBlock)();
 
 @interface ASJOverflowButton : UIBarButtonItem
 
-@property (assign, nonatomic) BOOL shouldDimBackground;
+/**
+ *  The overflow menu's background color.
+ */
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+
+/**
+ *  The overflow menu items' text color.
+ */
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
+
+/**
+ *  The overflow menu items' font.
+ */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
+
+/**
+ *  If set YES, the background will be dimmed while the menu is visible.
+ */
+@property (assign, nonatomic) BOOL shouldDimBackground;
+
+/**
+ *  A block that is called when any overflow menu item is tapped.
+ */
 @property (nullable, copy) ItemTapBlock itemTapBlock;
 
-- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items;
+/**
+ *  A block that is called when any overflow menu item is removed from the screen.
+ */
+@property (nullable, copy) MenuRemoveBlock menuRemoveBlock;
+
+/**
+ *  The designated initializer.
+ *
+ *  @param target A UIViewController to show the overflow menu on.
+ *  @param image  The overflow buttn's image.
+ *  @param items  An array of ASJOverflowItems to show on the menu.
+ *
+ *  @return An instance of ASJOverflowButton.
+ */
+- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
+
+/**
+ *  Don't allow user to use "init".
+ */
+- (instancetype)init NS_UNAVAILABLE;
+
+/**
+ *  Don't allow user to use "initWithCoder:".
+ */
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+
 - (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;
+- (void)setMenuRemoveBlock:(MenuRemoveBlock _Nullable)menuRemoveBlock;
 
 @end
 
 @interface ASJOverflowItem : NSObject
 
+/**
+ *  The overflow item's name.
+ */
 @property (copy, nonatomic) NSString *name;
+
+/**
+ *  The overflow item's image. Optional.
+ */
 @property (nullable, strong, nonatomic) UIImage *image;
 
+/**
+ *  A convenience constructor to create ASJOverflowItems.
+ *
+ *  @param name  The overflow item's name.
+ *  @param image The overflow item's image. Optional.
+ *
+ *  @return An instance of ASJOverflowItem.
+ */
 + (ASJOverflowItem *)itemWithName:(NSString *)name image:(nullable UIImage *)image;
 
 @end

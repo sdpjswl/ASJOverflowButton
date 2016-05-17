@@ -32,12 +32,39 @@ typedef void (^MenuRemoveBlock)();
 
 @interface ASJOverflowMenu : UIView
 
-@property (copy, nonatomic) NSArray *items;
+/**
+ *  An array of ASJOverflowItems to show on the menu.
+ */
+@property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
+
+/**
+ *  The overflow menu's background color.
+ */
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+
+/**
+ *  The overflow menu items' text color.
+ */
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
+
+/**
+ *  The overflow menu items' font.
+ */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
+
+/**
+ *  If set YES, the background will be dimmed while the menu is visible.
+ */
 @property (assign, nonatomic) BOOL shouldDimBackground;
+
+/**
+ *  A block that is called when any overflow menu item is tapped.
+ */
 @property (nullable, copy) ItemTapBlock itemTapBlock;
+
+/**
+ *  A block that is called when any overflow menu item is removed from the screen.
+ */
 @property (nullable, copy) MenuRemoveBlock menuRemoveBlock;
 
 - (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;

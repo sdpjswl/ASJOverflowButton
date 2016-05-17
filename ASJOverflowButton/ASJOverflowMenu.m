@@ -136,16 +136,15 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setShouldDimBackground:(BOOL)shouldDimBackground
 {
+  _shouldDimBackground = shouldDimBackground;
   if (shouldDimBackground) {
-    _contentView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
+    _contentView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
   }
 }
 
 - (void)reloadTable
 {
-  [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-    [_itemsTableView reloadData];
-  }];
+  [_itemsTableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource
@@ -191,14 +190,14 @@ static NSString *const kCellIdentifier = @"cell";
     cell.textLabel.textColor = _itemTextColor;
   }
   else {
-    cell.textLabel.textColor = [UIColor colorWithWhite:0.0 alpha:0.8];
+    cell.textLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
   }
   
   if (_itemFont) {
     cell.textLabel.font = _itemFont;
   }
   else {
-    cell.textLabel.font = [UIFont systemFontOfSize:13.0];
+    cell.textLabel.font = [UIFont systemFontOfSize:13.0f];
   }
   
   return cell;

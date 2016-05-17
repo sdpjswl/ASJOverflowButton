@@ -49,9 +49,10 @@
   NSAssert(image, @"You must provide an image for the Overflow button.");
   NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
   
-  UIButton *btn = [self buttonWithImage:image];
-  self = [super initWithCustomView:btn];
-  if (self) {
+  self = [super init];
+  if (self)
+  {
+    self.customView = [self buttonWithImage:image];
     _targetController = target;
     _items = items;
     [self setup];
@@ -98,15 +99,21 @@
 - (void)handleOverflowBlocks
 {
   __weak typeof(self) weakSelf = self;
-  [_overflowMenu setItemTapBlock:^(ASJOverflowItem *item, NSInteger idx) {
-    if (weakSelf.itemTapBlock) {
-      weakSelf.itemTapBlock(item, idx);
-    }
-  }];
+  [_overflowMenu setItemTapBlock:^(ASJOverflowItem *item, NSInteger idx)
+   {
+     if (weakSelf.itemTapBlock) {
+       weakSelf.itemTapBlock(item, idx);
+     }
+   }];
   
-  [_overflowMenu setMenuRemoveBlock:^{
-    [weakSelf hideMenu];
-  }];
+  [_overflowMenu setMenuRemoveBlock:^
+   {
+     [weakSelf hideMenu];
+     
+     if (weakSelf.menuRemoveBlock) {
+       weakSelf.menuRemoveBlock();
+     }
+   }];
 }
 
 #pragma mark - Button for custom view
@@ -114,7 +121,7 @@
 - (UIButton *)buttonWithImage:(UIImage *)image
 {
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.frame = CGRectMake(0, 0, 44, 44);
+  button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
   [button setImage:image forState:UIControlStateNormal];
   [button addTarget:self action:@selector(overflowButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
   return button;
@@ -129,21 +136,25 @@
 
 - (void)setMenuBackgroundColor:(UIColor *)menuBackgroundColor
 {
+  _menuBackgroundColor = menuBackgroundColor;
   _overflowMenu.menuBackgroundColor = menuBackgroundColor;
 }
 
 - (void)setItemTextColor:(UIColor *)itemTextColor
 {
+  _itemTextColor = itemTextColor;
   _overflowMenu.itemTextColor = itemTextColor;
 }
 
 - (void)setItemFont:(UIFont *)itemFont
 {
+  _itemFont = itemFont;
   _overflowMenu.itemFont = itemFont;
 }
 
 - (void)setShouldDimBackground:(BOOL)shouldDimBackground
 {
+  _shouldDimBackground = shouldDimBackground;
   _overflowMenu.shouldDimBackground = shouldDimBackground;
 }
 
@@ -152,17 +163,17 @@
 - (void)showMenu
 {
   [_targetController.view addSubview:_overflowMenu];
-  [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _overflowMenu.alpha = 1.0;
+                     _overflowMenu.alpha = 1.0f;
                    } completion:nil];
 }
 
 - (void)hideMenu
 {
-  [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
-                     _overflowMenu.alpha = 0.0;
+                     _overflowMenu.alpha = 0.0f;
                    } completion:^(BOOL finished) {
                      [_overflowMenu removeFromSuperview];
                    }];
