@@ -87,11 +87,11 @@
 
 - (void)setupOverflowMenu
 {
-  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:@"ASJOverflowMenu" owner:self options:nil][0];
+  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:@"ASJOverflowMenu" owner:self options:nil].firstObject;
   _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _overflowMenu.frame = _targetController.view.bounds;
   _overflowMenu.items = _items;
-  _overflowMenu.alpha = 0.0;
+  _overflowMenu.alpha = 0.0f;
   
   [self handleOverflowBlocks];
 }

@@ -84,7 +84,7 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-  // thanks to: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
+  // thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
   // don't allow content view's tap gesture to be detected inside table view
   CGPoint location = [touch locationInView:self];
   UIView *view = [self hitTest:location withEvent:nil];
@@ -106,13 +106,13 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)setupShadow
 {
   CGRect frame = _itemsTableView.bounds;
-  frame.size.height = 44 * _items.count;
+  frame.size.height = 44.0f * _items.count;
   UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:frame];
   _itemsTableView.layer.masksToBounds = YES;
   _itemsTableView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-  _itemsTableView.layer.shadowOffset = CGSizeMake(0, 0);
-  _itemsTableView.layer.shadowOpacity = 0.5;
-  _itemsTableView.layer.shadowRadius = 2.0;
+  _itemsTableView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+  _itemsTableView.layer.shadowOpacity = 0.5f;
+  _itemsTableView.layer.shadowRadius = 2.0f;
   _itemsTableView.layer.shadowPath = shadowPath.CGPath;
 }
 
