@@ -6,7 +6,7 @@ Working on projects that are simultanously being developed on both iOS and Andro
 
 CocoaPods is the preferred way to install this library. Add this command to your `Podfile`:
 
-```
+```ruby
 pod 'ASJOverflowButton'
 ```
 
@@ -42,10 +42,10 @@ Can ONLY show the overflow menu on the top right corner of the screen.
 
 # To-do
 
-- ~~Menu closes abruptly when tapped outside~~
-- Menu should close when tapped on the clear table view outside the items (BUG)
-- Allow a menu to be created with a title
-- Some way to adjust width of the menu
+- ~~Menu closes abruptly when tapped outside.~~
+- Menu should close when tapped on the clear table view outside the items (BUG).
+- Allow a menu to be created with a title.
+- Some way to adjust width of the menu.
 - Maybe some way to show menu on both, left and right sides?
 
 # Credits
