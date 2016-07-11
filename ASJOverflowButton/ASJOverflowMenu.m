@@ -90,6 +90,11 @@ static NSString *const kCellIdentifier = @"cell";
   UIView *view = [self hitTest:location withEvent:nil];
   if ([view isDescendantOfView:_itemsTableView])
   {
+    CGPoint tapPoint = [self convertPoint:location toView:_itemsTableView];
+    NSIndexPath *idxPath = [_itemsTableView indexPathForRowAtPoint:tapPoint];
+    if (!idxPath) {
+      [self removeView];
+    }
     return NO;
   }
   return YES;
