@@ -15,7 +15,7 @@ pod 'ASJOverflowButton'
 Use the designated initialiser to create the button, like so:
 
 ```objc
-ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithTarget:aTarget image:anImage items:someItems];
+ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithImage:anImage items:someItems];
 self.navigationItem.rightBarButtonItem = overflowButton;
 ```
 
@@ -44,7 +44,7 @@ Can ONLY show the overflow menu on the top right corner of the screen.
 
 - ~~Menu closes abruptly when tapped outside.~~
 - ~~Menu should close when tapped on the clear table view outside the items (BUG).~~
-- Allow a menu to be created with a title.
+- ~~Allow a menu to be created with a title.~~
 - Some way to adjust width of the menu.
 - Maybe some way to show menu on both, left and right sides?
 
