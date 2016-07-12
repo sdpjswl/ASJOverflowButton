@@ -49,6 +49,7 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)layoutSubviews
 {
   [super layoutSubviews];
+  [self layoutIfNeeded];
   [self setupShadow];
 }
 
@@ -60,7 +61,7 @@ static NSString *const kCellIdentifier = @"cell";
   _itemsTableView.tableFooterView = [[UIView alloc] init];
   _itemsTableView.delaysContentTouches = NO;
   _itemsTableView.bounces = NO;
-  _itemsTableView.clipsToBounds = YES;
+  _itemsTableView.clipsToBounds = NO;
   _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   Class cellClass = [UITableViewCell class];
@@ -110,14 +111,14 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setupShadow
 {
+  _itemsTableView.layer.masksToBounds = NO;
+  _itemsTableView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+  _itemsTableView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
+  _itemsTableView.layer.shadowOpacity = 1.0f;
+  
   CGRect frame = _itemsTableView.bounds;
   frame.size.height = 44.0f * _items.count;
   UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:frame];
-  _itemsTableView.layer.masksToBounds = YES;
-  _itemsTableView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-  _itemsTableView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-  _itemsTableView.layer.shadowOpacity = 0.5f;
-  _itemsTableView.layer.shadowRadius = 2.0f;
   _itemsTableView.layer.shadowPath = shadowPath.CGPath;
 }
 
