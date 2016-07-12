@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.1](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.1)
+Released on Tuesday, 12 Jul, 2016.
+
+#### Added
+* Added a constructor method to create overflow item with only title.
+
+#### Updated
+* Updated the designated initializer; removed target controller. Menu is now created on a separate window.
+
+#### Fixed
+* Fixed a bug where shadow wasn't being drawn properly.
+
 ## [1.0](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.0)
 Released on Monday, 11 Jul, 2016.
 
