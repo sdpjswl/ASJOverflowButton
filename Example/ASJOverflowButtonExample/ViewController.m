@@ -64,8 +64,8 @@
 
 - (void)setupOverflowButton
 {
-  _overflowButton = [[ASJOverflowButton alloc] initWithTarget:self.navigationController image:[UIImage imageNamed:@"overflow_icon"] items:_overflowItems];
-  _overflowButton.shouldDimBackground = YES;
+  _overflowButton = [[ASJOverflowButton alloc] initWithImage:[UIImage imageNamed:@"overflow_icon"] items:_overflowItems];
+  _overflowButton.shouldDimBackground = NO;
   _overflowButton.menuBackgroundColor = [UIColor whiteColor];
   _overflowButton.itemTextColor = [UIColor blackColor];
   _overflowButton.itemFont = [UIFont fontWithName:@"Verdana" size:13.0f];
