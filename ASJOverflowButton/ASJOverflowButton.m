@@ -26,9 +26,9 @@
 
 @interface ASJOverflowButton ()
 
-@property (weak, nonatomic) UIViewController *targetController;
 @property (copy, nonatomic) NSArray *items;
 @property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
+@property (strong, nonatomic) UIWindow *overflowWindow;
 
 - (UIButton *)buttonWithImage:(UIImage *)image;
 - (void)setup;
@@ -43,9 +43,8 @@
 
 @implementation ASJOverflowButton
 
-- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(nonnull NSArray<ASJOverflowItem *> *)items
+- (instancetype)initWithImage:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items
 {
-  NSAssert(target, @"You must provide a UIViewController as target.");
   NSAssert(image, @"You must provide an image for the Overflow button.");
   NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
   
@@ -53,7 +52,6 @@
   if (self)
   {
     self.customView = [self buttonWithImage:image];
-    _targetController = target;
     _items = items;
     [self setup];
   }
@@ -87,11 +85,10 @@
 
 - (void)setupOverflowMenu
 {
-  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:@"ASJOverflowMenu" owner:self options:nil].firstObject;
-  _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  _overflowMenu.frame = _targetController.view.bounds;
+  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:@"ASJOverflowMenu" owner:nil options:nil].firstObject;
   _overflowMenu.items = _items;
   _overflowMenu.alpha = 0.0f;
+  _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   
   [self handleOverflowBlocks];
 }
@@ -162,7 +159,17 @@
 
 - (void)showMenu
 {
-  [_targetController.view addSubview:_overflowMenu];
+  _overflowWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
+  _overflowWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  
+  UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
+  _overflowWindow.windowLevel = topWindow.windowLevel + 1;
+  [_overflowWindow makeKeyAndVisible];
+  
+  _overflowMenu.frame = _overflowWindow.bounds;
+  [_overflowWindow addSubview:_overflowMenu];
+  
   [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^{
                      _overflowMenu.alpha = 1.0f;
@@ -172,16 +179,27 @@
 - (void)hideMenu
 {
   [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     _overflowMenu.alpha = 0.0f;
-                   } completion:^(BOOL finished) {
-                     [_overflowMenu removeFromSuperview];
-                   }];
+                   animations:^
+   {
+     _overflowMenu.alpha = 0.0f;
+   } completion:^(BOOL finished)
+   {
+     [_overflowMenu removeFromSuperview];
+     _overflowWindow.hidden = YES;
+     _overflowWindow = nil;
+   }];
 }
 
 @end
 
 @implementation ASJOverflowItem
+
++ (ASJOverflowItem *)itemWithName:(NSString *)name
+{
+  ASJOverflowItem *item = [[ASJOverflowItem alloc] init];
+  item.name = name;
+  return item;
+}
 
 + (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image
 {

@@ -71,7 +71,7 @@ typedef void (^MenuRemoveBlock)();
  *
  *  @return An instance of ASJOverflowButton.
  */
-- (instancetype)initWithTarget:(UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithImage:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Don't allow user to use "init".
@@ -99,6 +99,15 @@ typedef void (^MenuRemoveBlock)();
  *  The overflow item's image. Optional.
  */
 @property (nullable, strong, nonatomic) UIImage *image;
+
+/**
+ *  A convenience constructor to create ASJOverflowItems.
+ *
+ *  @param name  The overflow item's name.
+ *
+ *  @return An instance of ASJOverflowItem.
+ */
++ (ASJOverflowItem *)itemWithName:(NSString *)name;
 
 /**
  *  A convenience constructor to create ASJOverflowItems.
