@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *itemLabel;
 
 - (void)setup;
+- (void)setupDefaults;
 - (void)setupOverflowItems;
 - (void)setupOverflowButton;
 - (void)handleOverflowBlocks;
@@ -27,24 +28,23 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
   [self setup];
-}
-
-- (void)didReceiveMemoryWarning
-{
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Setup
 
 - (void)setup
 {
-  self.title = @"Tap me -->";
-  _itemLabel.superview.hidden = YES;
+  [self setupDefaults];
   [self setupOverflowItems];
   [self setupOverflowButton];
+  [self handleOverflowBlocks];
+}
+
+- (void)setupDefaults
+{
+  self.title = @"Tap me -->";
+  _itemLabel.superview.hidden = YES;
 }
 
 - (void)setupOverflowItems
@@ -70,8 +70,6 @@
   _overflowButton.itemTextColor = [UIColor blackColor];
   _overflowButton.itemFont = [UIFont fontWithName:@"Verdana" size:13.0f];
   self.navigationItem.rightBarButtonItem = _overflowButton;
-  
-  [self handleOverflowBlocks];
 }
 
 - (void)handleOverflowBlocks

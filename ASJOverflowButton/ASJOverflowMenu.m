@@ -83,10 +83,12 @@ static NSString *const kCellIdentifier = @"cell";
   [self removeView];
 }
 
+/**
+ *  thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
+ *  don't allow content view's tap gesture to be detected inside table view
+ */
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-  // thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
-  // don't allow content view's tap gesture to be detected inside table view
   CGPoint location = [touch locationInView:self];
   UIView *view = [self hitTest:location withEvent:nil];
   if ([view isDescendantOfView:_itemsTableView])
