@@ -26,18 +26,22 @@
 
 @interface ASJOverflowButton ()
 
+@property (strong, nonatomic) UIImage *buttonImage;
 @property (copy, nonatomic) NSArray *items;
 @property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
 @property (strong, nonatomic) UIWindow *overflowWindow;
 
-- (UIButton *)buttonWithImage:(UIImage *)image;
 - (void)setup;
 - (void)validateItems;
-- (void)setupOverflowMenu;
-- (void)handleOverflowBlocks;
+- (void)setupCustomView;
+- (UIButton *)buttonWithImage:(UIImage *)image;
 - (void)overflowButtonTapped:(id)sender;
 - (void)showMenu;
 - (void)hideMenu;
+- (void)setupOverflowWindow;
+- (void)setupOverflowMenu;
+- (void)handleOverflowBlocks;
+- (void)destroyOverflowWindowAndMenu;
 
 @end
 
@@ -45,13 +49,13 @@
 
 - (instancetype)initWithImage:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items
 {
-  NSAssert(image, @"You must provide an image for the Overflow button.");
+  NSAssert(image, @"You must provide an image for the overflow button.");
   NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
   
   self = [super init];
   if (self)
   {
-    self.customView = [self buttonWithImage:image];
+    _buttonImage = image;
     _items = items;
     [self setup];
   }
@@ -63,34 +67,91 @@
 - (void)setup
 {
   [self validateItems];
-  [self setupOverflowMenu];
+  [self setupCustomView];
 }
 
 - (void)validateItems
 {
-  for (id item in _items)
+  for (id object in _items)
   {
-    BOOL success = [item isMemberOfClass:[ASJOverflowItem class]];
-    if (!success) {
-      NSAssert(success, @"Items must be of kind ASJOverflowItem");
-    }
+    BOOL success = [object isMemberOfClass:[ASJOverflowItem class]];
+    NSAssert(success, @"All items must be of type ASJOverflowItem");
     
-    ASJOverflowItem *itemObject = (ASJOverflowItem *)item;
-    BOOL nilCheck = (itemObject.name != nil);
-    if (!nilCheck) {
-      NSAssert(nilCheck, @"ASJOverflowItem property 'name' must not be nil. 'image' however is optional.");
-    }
+    ASJOverflowItem *item = (ASJOverflowItem *)object;
+    NSAssert(item.name, @"ASJOverflowItem's 'name' must not be nil; 'image' is optional.");
   }
+}
+
+#pragma mark - Custom view
+
+- (void)setupCustomView
+{
+  self.customView = [self buttonWithImage:_buttonImage];
+}
+
+- (UIButton *)buttonWithImage:(UIImage *)image
+{
+  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
+  [button setImage:image forState:UIControlStateNormal];
+  [button addTarget:self action:@selector(overflowButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+  return button;
+}
+
+- (void)overflowButtonTapped:(id)sender
+{
+  [self showMenu];
+}
+
+#pragma mark - Show/hide
+
+- (void)showMenu
+{
+  [self setupOverflowWindow];
+  [self setupOverflowMenu];
+  [self handleOverflowBlocks];
+  
+  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^
+   {
+     _overflowMenu.alpha = 1.0f;
+   } completion:nil];
+}
+
+- (void)hideMenu
+{
+  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
+                   animations:^
+   {
+     _overflowMenu.alpha = 0.0f;
+   } completion:^(BOOL finished)
+   {
+     [self destroyOverflowWindowAndMenu];
+   }];
+}
+
+#pragma mark - Window + menu
+
+- (void)setupOverflowWindow
+{
+  _overflowWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
+  _overflowWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  
+  UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
+  _overflowWindow.windowLevel = topWindow.windowLevel + 1;
+  [_overflowWindow makeKeyAndVisible];
 }
 
 - (void)setupOverflowMenu
 {
-  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:@"ASJOverflowMenu" owner:nil options:nil].firstObject;
+  NSString *nibName = NSStringFromClass([ASJOverflowMenu class]);
+  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil].firstObject;
   _overflowMenu.items = _items;
   _overflowMenu.alpha = 0.0f;
   _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  
-  [self handleOverflowBlocks];
+  _overflowMenu.frame = _overflowWindow.bounds;
+  [_overflowWindow addSubview:_overflowMenu];
 }
 
 - (void)handleOverflowBlocks
@@ -113,20 +174,15 @@
    }];
 }
 
-#pragma mark - Button for custom view
-
-- (UIButton *)buttonWithImage:(UIImage *)image
+- (void)destroyOverflowWindowAndMenu
 {
-  UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-  button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
-  [button setImage:image forState:UIControlStateNormal];
-  [button addTarget:self action:@selector(overflowButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-  return button;
-}
-
-- (void)overflowButtonTapped:(id)sender
-{
-  [self showMenu];
+  @synchronized (self)
+  {
+    [_overflowMenu removeFromSuperview];
+    _overflowMenu = nil;
+    _overflowWindow.hidden = YES;
+    _overflowWindow = nil;
+  }
 }
 
 #pragma mark - Property setters
@@ -153,41 +209,6 @@
 {
   _shouldDimBackground = shouldDimBackground;
   _overflowMenu.shouldDimBackground = shouldDimBackground;
-}
-
-#pragma mark - Show/hide
-
-- (void)showMenu
-{
-  _overflowWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
-  _overflowWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  
-  UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
-  _overflowWindow.windowLevel = topWindow.windowLevel + 1;
-  [_overflowWindow makeKeyAndVisible];
-  
-  _overflowMenu.frame = _overflowWindow.bounds;
-  [_overflowWindow addSubview:_overflowMenu];
-  
-  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^{
-                     _overflowMenu.alpha = 1.0f;
-                   } completion:nil];
-}
-
-- (void)hideMenu
-{
-  [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
-                   animations:^
-   {
-     _overflowMenu.alpha = 0.0f;
-   } completion:^(BOOL finished)
-   {
-     [_overflowMenu removeFromSuperview];
-     _overflowWindow.hidden = YES;
-     _overflowWindow = nil;
-   }];
 }
 
 @end
