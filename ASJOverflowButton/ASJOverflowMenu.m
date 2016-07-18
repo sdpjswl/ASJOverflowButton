@@ -23,13 +23,26 @@
 
 #import "ASJOverflowMenu.h"
 #import "ASJOverflowButton.h"
+#import <QuartzCore/CALayer.h>
+#import <UIKit/UIBezierPath.h>
+#import <UIKit/UIImageView.h>
+#import <UIKit/UILabel.h>
+#import <UIKit/UITableView.h>
+#import <UIKit/UITapGestureRecognizer.h>
 
 static NSString *const kCellIdentifier = @"cell";
+
+#define kStatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
 
 @interface ASJOverflowMenu () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraint;
+@property (weak, nonatomic) NSLayoutConstraint *widthConstraintForNewMultiplier;
 
 - (void)setupTable;
 - (void)setupContentView;
@@ -84,7 +97,7 @@ static NSString *const kCellIdentifier = @"cell";
 }
 
 /**
- *  thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
+ *  Thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
  *  don't allow content view's tap gesture to be detected inside table view
  */
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -148,6 +161,37 @@ static NSString *const kCellIdentifier = @"cell";
   if (shouldDimBackground) {
     _contentView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
   }
+}
+
+/**
+ *  Since 'multiplier' property is readonly, I am creating a new width constraint with the same properties as the current one but assigning the new multiplier to it. Only after setting it active does it work.
+ */
+- (void)setWidthMultiplier:(CGFloat)widthMultiplier
+{
+  NSAssert(widthMultiplier >= 0.0f && widthMultiplier <= 1.0f, @"Width multiplier must range from 0 to 1.");
+  _widthMultiplier = widthMultiplier;
+  _widthConstraint = self.widthConstraintForNewMultiplier;
+  _widthConstraint.active = YES;
+}
+
+- (NSLayoutConstraint *)widthConstraintForNewMultiplier
+{
+  return [NSLayoutConstraint
+          constraintWithItem:_widthConstraint.firstItem
+          attribute:_widthConstraint.firstAttribute
+          relatedBy:_widthConstraint.relation
+          toItem:_widthConstraint.secondItem
+          attribute:_widthConstraint.secondAttribute
+          multiplier:_widthMultiplier
+          constant:0.0f];
+}
+
+- (void)setMenuMargins:(MenuMargins)menuMargins
+{
+  _menuMargins = menuMargins;
+  _topConstraint.constant = menuMargins.top + kStatusBarHeight;
+  _bottomConstraint.constant = menuMargins.bottom;
+  _rightConstraint.constant = menuMargins.right;
 }
 
 - (void)reloadTable

@@ -22,7 +22,10 @@
 // THE SOFTWARE.
 
 #import "ASJOverflowButton.h"
-#import "ASJOverflowMenu.h"
+#import <UIKit/UIButton.h>
+#import <UIKit/UINibLoading.h>
+#import <UIKit/UIScreen.h>
+#import <UIKit/UIWindow.h>
 
 @interface ASJOverflowButton ()
 
@@ -32,6 +35,7 @@
 @property (strong, nonatomic) UIWindow *overflowWindow;
 
 - (void)setup;
+- (void)setupDefaults;
 - (void)validateItems;
 - (void)setupCustomView;
 - (UIButton *)buttonWithImage:(UIImage *)image;
@@ -66,18 +70,28 @@
 
 - (void)setup
 {
+  [self setupDefaults];
   [self validateItems];
   [self setupCustomView];
+}
+
+- (void)setupDefaults
+{
+  _menuBackgroundColor = [UIColor whiteColor];
+  _itemTextColor = [UIColor blackColor];
+  _itemFont = [UIFont systemFontOfSize:17.0f];
+  _shouldDimBackground = NO;
+  _widthMultiplier = 0.4f;
+  _menuMargins = MenuMarginsMake(5.0f, 5.0f, 5.0f);
 }
 
 - (void)validateItems
 {
   for (id object in _items)
   {
-    BOOL success = [object isMemberOfClass:[ASJOverflowItem class]];
-    NSAssert(success, @"All items must be of type ASJOverflowItem");
-    
+    NSAssert([object isMemberOfClass:[ASJOverflowItem class]], @"All items must be of type ASJOverflowItem");
     ASJOverflowItem *item = (ASJOverflowItem *)object;
+#pragma unused(item)
     NSAssert(item.name, @"ASJOverflowItem's 'name' must not be nil; 'image' is optional.");
   }
 }
@@ -149,6 +163,12 @@
   _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil].firstObject;
   _overflowMenu.items = _items;
   _overflowMenu.alpha = 0.0f;
+  _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
+  _overflowMenu.itemTextColor = _itemTextColor;
+  _overflowMenu.itemFont = _itemFont;
+  _overflowMenu.shouldDimBackground = _shouldDimBackground;
+  _overflowMenu.widthMultiplier = _widthMultiplier;
+  _overflowMenu.menuMargins = _menuMargins;
   _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   _overflowMenu.frame = _overflowWindow.bounds;
   [_overflowWindow addSubview:_overflowMenu];
@@ -185,33 +205,9 @@
   }
 }
 
-#pragma mark - Property setters
-
-- (void)setMenuBackgroundColor:(UIColor *)menuBackgroundColor
-{
-  _menuBackgroundColor = menuBackgroundColor;
-  _overflowMenu.menuBackgroundColor = menuBackgroundColor;
-}
-
-- (void)setItemTextColor:(UIColor *)itemTextColor
-{
-  _itemTextColor = itemTextColor;
-  _overflowMenu.itemTextColor = itemTextColor;
-}
-
-- (void)setItemFont:(UIFont *)itemFont
-{
-  _itemFont = itemFont;
-  _overflowMenu.itemFont = itemFont;
-}
-
-- (void)setShouldDimBackground:(BOOL)shouldDimBackground
-{
-  _shouldDimBackground = shouldDimBackground;
-  _overflowMenu.shouldDimBackground = shouldDimBackground;
-}
-
 @end
+
+#pragma mark - ASJOverflowItem
 
 @implementation ASJOverflowItem
 

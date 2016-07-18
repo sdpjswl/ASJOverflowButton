@@ -21,7 +21,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-@import UIKit;
+#import <CoreGraphics/CGBase.h>
+#import <Foundation/NSObjCRuntime.h>
+#import <UIKit/UIView.h>
 
 @class ASJOverflowItem;
 
@@ -29,6 +31,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 typedef void (^MenuRemoveBlock)();
+
+typedef struct MenuMargins
+{
+  CGFloat top, left, right, bottom;
+} MenuMargins;
+
+static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bottom)
+{
+  MenuMargins margins = {top, right, bottom};
+  return margins;
+}
 
 @interface ASJOverflowMenu : UIView
 
@@ -56,6 +69,16 @@ typedef void (^MenuRemoveBlock)();
  *  If set YES, the background will be dimmed while the menu is visible.
  */
 @property (assign, nonatomic) BOOL shouldDimBackground;
+
+/**
+ *  Set the ratio according to which the overflow menu width should be calculated. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
+ */
+@property (assign, nonatomic) CGFloat widthMultiplier;
+
+/**
+ *  The margins of the menu from the top, right and bottom edges. Defaults to 5 each.
+ */
+@property (assign, nonatomic) MenuMargins menuMargins;
 
 /**
  *  A block that is called when any overflow menu item is tapped.

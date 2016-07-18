@@ -65,7 +65,9 @@
 - (void)setupOverflowButton
 {
   _overflowButton = [[ASJOverflowButton alloc] initWithImage:[UIImage imageNamed:@"overflow_icon"] items:_overflowItems];
-  _overflowButton.shouldDimBackground = NO;
+  _overflowButton.shouldDimBackground = YES;
+  _overflowButton.widthMultiplier = 0.6f;
+  _overflowButton.menuMargins = MenuMarginsMake(10.0f, 10.0f, 10.0f);
   _overflowButton.menuBackgroundColor = [UIColor whiteColor];
   _overflowButton.itemTextColor = [UIColor blackColor];
   _overflowButton.itemFont = [UIFont fontWithName:@"Verdana" size:13.0f];
@@ -85,7 +87,7 @@
   
   [_overflowButton setMenuRemoveBlock:^
    {
-     NSLog(@"overflow menu hidden");
+     NSLog(@"hidden");
    }];
 }
 
