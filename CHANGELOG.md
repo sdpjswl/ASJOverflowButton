@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.2](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.2)
+Released on Monday, 18 Jul, 2016.
+
+#### Added
+* Added new property 'widthMultiplier' to set menu width ratio with respect to screen width.
+* Added new property 'menuMargins' to set menu margins from the top, right and bottom edges of the screen.
+
+#### Updated
+* Updated readme to reflect new properties and added more documentation.
+
+#### Fixed
+* Fixed/suppressed release warnings.
+
 ## [1.1](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.1)
 Released on Tuesday, 12 Jul, 2016.
 
