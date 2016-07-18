@@ -12,7 +12,7 @@ pod 'ASJOverflowButton'
 
 # Usage
 
-Use the designated initialiser to create the button, like so:
+Use the designated initializer to create the button, like so:
 
 ```objc
 ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithImage:anImage items:someItems];
@@ -28,11 +28,34 @@ ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image];
 The are a few properties to customise the look and feel of the overflow menu.
 
 ```objc
-@property (assign, nonatomic) BOOL shouldDimBackground;
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
+```
+Sets the background color of the overflow menu. Defaults to white.
+
+```objc
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
+```
+Sets the text color of the menu items. Defaults to black.
+
+```objc
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 ```
+Sets the font of the menu items. Default to system font of size 17.
+
+```objc
+@property (assign, nonatomic) BOOL shouldDimBackground;
+```
+Dims the background when menu is showing. Defaults to no.
+
+```objc
+@property (assign, nonatomic) CGFloat widthMultiplier;
+```
+A ratio to set the menu width with respect to the screen width. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
+
+```objc
+@property (assign, nonatomic) MenuMargins menuMargins;
+```
+Sets the margins of the menu from the top, right and bottom edges of the screen. Menu will always appear below the status bar. Defaults to 5 each.
 
 ![alt tag](Screenshot.png)
 
@@ -43,14 +66,16 @@ Can ONLY show the overflow menu on the top right corner of the screen.
 # To-do
 
 - ~~Menu closes abruptly when tapped outside.~~
-- ~~Menu should close when tapped on the clear table view outside the items (BUG).~~
+- ~~Menu should close when tapped on the clear table view outside the items.~~
 - ~~Allow a menu to be created with a title.~~
-- Some way to adjust width of the menu.
+- ~~Some way to adjust width of the menu.~~
 - Maybe some way to show menu on both, left and right sides?
 
 # Credits
 
-- To [this answer on Stack Overflow](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt) which helped me fix an issue where taps on overflow menu's items would be consumed by the background view's tap gesture.
+- [UITableView passes touch events to superview when it shouldn't](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt)
+- [Can i change multiplier property for NSLayoutConstraint?](http://stackoverflow.com/questions/19593641/can-i-change-multiplier-property-for-nslayoutconstraint#comment54574185_27831003)
+- [Which is the best way to suppress “unused variable” warning?](http://stackoverflow.com/questions/17622237/which-is-the-best-way-to-suppress-unused-variable-warning)
 
 # License
 
