@@ -70,6 +70,7 @@ Can ONLY show the overflow menu on the top right corner of the screen.
 - ~~Allow a menu to be created with a title.~~
 - ~~Some way to adjust width of the menu.~~
 - Maybe some way to show menu on both, left and right sides?
+- Gradient at bottom to hint scrolling.
 
 # Credits
 
