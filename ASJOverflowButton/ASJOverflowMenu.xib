@@ -15,23 +15,46 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZb-EC-wQp">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AYQ-pj-FRP">
-                            <rect key="frame" x="355" y="20" width="240" height="575"/>
+                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGh-iJ-DVU">
+                            <rect key="frame" x="355" y="25" width="240" height="570"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AYQ-pj-FRP">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="570"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="b7t-iz-EGu" id="IMs-XT-PbR"/>
+                                        <outlet property="delegate" destination="b7t-iz-EGu" id="tEL-fa-OtD"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="dataSource" destination="b7t-iz-EGu" id="IMs-XT-PbR"/>
-                                <outlet property="delegate" destination="b7t-iz-EGu" id="tEL-fa-OtD"/>
-                            </connections>
-                        </tableView>
+                            <constraints>
+                                <constraint firstItem="AYQ-pj-FRP" firstAttribute="height" secondItem="zGh-iJ-DVU" secondAttribute="height" id="5P4-zx-jIc"/>
+                                <constraint firstItem="AYQ-pj-FRP" firstAttribute="top" secondItem="zGh-iJ-DVU" secondAttribute="top" id="B2M-2L-dq2"/>
+                                <constraint firstItem="AYQ-pj-FRP" firstAttribute="leading" secondItem="zGh-iJ-DVU" secondAttribute="leading" id="DMK-CV-iab"/>
+                                <constraint firstAttribute="bottom" secondItem="AYQ-pj-FRP" secondAttribute="bottom" id="ibK-rz-1Rp"/>
+                                <constraint firstAttribute="trailing" secondItem="AYQ-pj-FRP" secondAttribute="trailing" id="yJp-ea-8By"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="AYQ-pj-FRP" secondAttribute="bottom" constant="5" id="1ek-fx-pcH"/>
-                        <constraint firstItem="AYQ-pj-FRP" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="20" id="6AR-Nf-9iU"/>
-                        <constraint firstItem="AYQ-pj-FRP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hZb-EC-wQp" secondAttribute="leading" constant="5" id="P6z-gA-e9t"/>
-                        <constraint firstAttribute="trailing" secondItem="AYQ-pj-FRP" secondAttribute="trailing" constant="5" id="fAK-co-rjs"/>
-                        <constraint firstItem="AYQ-pj-FRP" firstAttribute="width" secondItem="hZb-EC-wQp" secondAttribute="width" multiplier="0.4" priority="750" id="lff-fs-s2M"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="36K-uA-8cj"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="CwJ-tT-lQv"/>
+                        <constraint firstAttribute="bottom" secondItem="zGh-iJ-DVU" secondAttribute="bottom" constant="5" id="Piy-jv-YSv"/>
+                        <constraint firstAttribute="trailing" secondItem="zGh-iJ-DVU" secondAttribute="trailing" constant="5" id="R5F-gh-1FG"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="width" secondItem="hZb-EC-wQp" secondAttribute="width" multiplier="0.4" priority="750" id="T5h-Uu-P0Q"/>
+                        <constraint firstAttribute="bottom" secondItem="zGh-iJ-DVU" secondAttribute="bottom" constant="575" id="YZy-Rg-l9c"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="sGV-9K-3M7"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hZb-EC-wQp" secondAttribute="leading" constant="5" id="tBR-UP-ZHF"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="CwJ-tT-lQv"/>
+                            <exclude reference="YZy-Rg-l9c"/>
+                            <exclude reference="sGV-9K-3M7"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -44,14 +67,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bottomConstraint" destination="1ek-fx-pcH" id="kaF-sw-Fp8"/>
+                <outlet property="bottomConstraint" destination="Piy-jv-YSv" id="9Kb-yn-QwR"/>
                 <outlet property="contentView" destination="hZb-EC-wQp" id="HwN-Wd-XHo"/>
                 <outlet property="itemsTableView" destination="AYQ-pj-FRP" id="dqc-4b-OBD"/>
-                <outlet property="rightConstraint" destination="fAK-co-rjs" id="iNw-6X-Qnj"/>
-                <outlet property="topConstraint" destination="6AR-Nf-9iU" id="JyZ-6x-buP"/>
-                <outlet property="widthConstraint" destination="lff-fs-s2M" id="wMZ-Xk-X3T"/>
+                <outlet property="rightConstraint" destination="R5F-gh-1FG" id="J6x-Y8-z91"/>
+                <outlet property="tableContainerView" destination="zGh-iJ-DVU" id="4vS-L7-T3a"/>
+                <outlet property="topConstraint" destination="sGV-9K-3M7" id="YRt-jD-M0s"/>
+                <outlet property="widthConstraint" destination="T5h-Uu-P0Q" id="1bK-Ck-uVY"/>
             </connections>
-            <point key="canvasLocation" x="462" y="346"/>
+            <point key="canvasLocation" x="444" y="408"/>
         </view>
     </objects>
 </document>

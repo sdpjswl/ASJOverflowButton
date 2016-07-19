@@ -27,6 +27,7 @@
 #import <UIKit/UIBezierPath.h>
 #import <UIKit/UIImageView.h>
 #import <UIKit/UILabel.h>
+#import <UIKit/UIScreen.h>
 #import <UIKit/UITableView.h>
 #import <UIKit/UITapGestureRecognizer.h>
 
@@ -37,6 +38,7 @@ static NSString *const kCellIdentifier = @"cell";
 @interface ASJOverflowMenu () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
+@property (weak, nonatomic) IBOutlet UIView *tableContainerView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
@@ -63,18 +65,24 @@ static NSString *const kCellIdentifier = @"cell";
 {
   [super layoutSubviews];
   [self layoutIfNeeded];
-  [self setupShadow];
+  
+  if (_hidesShadow == NO) {
+    [self setupShadow];
+  }
+  else {
+    _tableContainerView.layer.shadowPath = nil;
+  }
 }
 
 #pragma mark - Setup
 
 - (void)setupTable
 {
+  _itemsTableView.bounces = NO;
+  _itemsTableView.clipsToBounds = YES;
+  _itemsTableView.delaysContentTouches = NO;
   _itemsTableView.backgroundColor = [UIColor clearColor];
   _itemsTableView.tableFooterView = [[UIView alloc] init];
-  _itemsTableView.delaysContentTouches = NO;
-  _itemsTableView.bounces = NO;
-  _itemsTableView.clipsToBounds = NO;
   _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   Class cellClass = [UITableViewCell class];
@@ -83,7 +91,6 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setupContentView
 {
-  _contentView.backgroundColor = [UIColor clearColor];
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
   tap.delegate = self;
   [_contentView addGestureRecognizer:tap];
@@ -126,15 +133,13 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setupShadow
 {
-  _itemsTableView.layer.masksToBounds = NO;
-  _itemsTableView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-  _itemsTableView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
-  _itemsTableView.layer.shadowOpacity = 1.0f;
+  _tableContainerView.layer.masksToBounds = NO;
+  _tableContainerView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+  _tableContainerView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
+  _tableContainerView.layer.shadowOpacity = 1.0f;
   
-  CGRect frame = _itemsTableView.bounds;
-  frame.size.height = 44.0f * _items.count;
-  UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:frame];
-  _itemsTableView.layer.shadowPath = shadowPath.CGPath;
+  UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_tableContainerView.bounds];
+  _tableContainerView.layer.shadowPath = shadowPath.CGPath;
 }
 
 - (void)setMenuBackgroundColor:(UIColor *)menuBackgroundColor
@@ -155,12 +160,28 @@ static NSString *const kCellIdentifier = @"cell";
   [self reloadTable];
 }
 
-- (void)setShouldDimBackground:(BOOL)shouldDimBackground
+- (void)setDimsBackground:(BOOL)dimsBackground
 {
-  _shouldDimBackground = shouldDimBackground;
-  if (shouldDimBackground) {
-    _contentView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.6f];
+  _dimsBackground = dimsBackground;
+  UIColor *color = [UIColor colorWithWhite:0.0f alpha:0.6f];
+  
+  if (!dimsBackground) {
+    color = [UIColor clearColor];
   }
+  
+  _contentView.backgroundColor = color;
+}
+
+- (void)setHidesShadow:(BOOL)hidesShadow
+{
+  _hidesShadow = hidesShadow;
+  [self layoutIfNeeded];
+}
+
+- (void)setMenuItemHeight:(CGFloat)menuItemHeight
+{
+  _menuItemHeight = menuItemHeight;
+  [self reloadTable];
 }
 
 /**
@@ -192,6 +213,17 @@ static NSString *const kCellIdentifier = @"cell";
   _topConstraint.constant = menuMargins.top + kStatusBarHeight;
   _bottomConstraint.constant = menuMargins.bottom;
   _rightConstraint.constant = menuMargins.right;
+  
+  CGFloat menuSize = _menuItemHeight * _items.count;
+  CGFloat screenHeight =  [UIScreen mainScreen].bounds.size.height;
+  CGFloat bottomConstant = screenHeight - menuSize - _topConstraint.constant;
+  
+  if (bottomConstant < menuMargins.bottom) {
+    bottomConstant = menuMargins.bottom;
+  }
+  
+  _bottomConstraint.constant = bottomConstant;
+  [self layoutIfNeeded];
 }
 
 - (void)reloadTable
@@ -256,6 +288,11 @@ static NSString *const kCellIdentifier = @"cell";
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  return _menuItemHeight;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

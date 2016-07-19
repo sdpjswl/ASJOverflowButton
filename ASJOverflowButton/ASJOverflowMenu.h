@@ -34,7 +34,7 @@ typedef void (^MenuRemoveBlock)();
 
 typedef struct MenuMargins
 {
-  CGFloat top, left, right, bottom;
+  CGFloat top, right, bottom;
 } MenuMargins;
 
 static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bottom)
@@ -51,24 +51,34 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
 
 /**
- *  The overflow menu's background color.
+ *  The overflow menu's background color. Defaults to white.
  */
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
 
 /**
- *  The overflow menu items' text color.
+ *  The overflow menu items' text color. Defaults to black.
  */
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
 
 /**
- *  The overflow menu items' font.
+ *  The overflow menu items' font. Defaults to system font 17 pt.
  */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 
 /**
- *  If set YES, the background will be dimmed while the menu is visible.
+ *  If set YES, the background will be dimmed while the menu is visible. Defaults to NO.
  */
-@property (assign, nonatomic) BOOL shouldDimBackground;
+@property (assign, nonatomic) BOOL dimsBackground;
+
+/**
+ *  If set YES, the shadow around the menu will not be drawn.
+ */
+@property (assign, nonatomic) BOOL hidesShadow;
+
+/**
+ *  Sets the height of individual overflow menu items. Defaults to 40 pt.
+ */
+@property (assign, nonatomic) CGFloat menuItemHeight;
 
 /**
  *  Set the ratio according to which the overflow menu width should be calculated. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
@@ -76,7 +86,7 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (assign, nonatomic) CGFloat widthMultiplier;
 
 /**
- *  The margins of the menu from the top, right and bottom edges. Defaults to 5 each.
+ *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pt each.
  */
 @property (assign, nonatomic) MenuMargins menuMargins;
 

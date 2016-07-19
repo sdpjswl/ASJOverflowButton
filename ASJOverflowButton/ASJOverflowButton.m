@@ -80,7 +80,9 @@
   _menuBackgroundColor = [UIColor whiteColor];
   _itemTextColor = [UIColor blackColor];
   _itemFont = [UIFont systemFontOfSize:17.0f];
-  _shouldDimBackground = NO;
+  _dimsBackground = NO;
+  _hidesShadow = NO;
+  _menuItemHeight = 40.0f;
   _widthMultiplier = 0.4f;
   _menuMargins = MenuMarginsMake(5.0f, 5.0f, 5.0f);
 }
@@ -166,7 +168,9 @@
   _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
   _overflowMenu.itemTextColor = _itemTextColor;
   _overflowMenu.itemFont = _itemFont;
-  _overflowMenu.shouldDimBackground = _shouldDimBackground;
+  _overflowMenu.dimsBackground = _dimsBackground;
+  _overflowMenu.hidesShadow = _hidesShadow;
+  _overflowMenu.menuItemHeight = _menuItemHeight;
   _overflowMenu.widthMultiplier = _widthMultiplier;
   _overflowMenu.menuMargins = _menuMargins;
   _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
