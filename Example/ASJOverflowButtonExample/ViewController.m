@@ -65,8 +65,10 @@
 - (void)setupOverflowButton
 {
   _overflowButton = [[ASJOverflowButton alloc] initWithImage:[UIImage imageNamed:@"overflow_icon"] items:_overflowItems];
-  _overflowButton.shouldDimBackground = YES;
-  _overflowButton.widthMultiplier = 0.6f;
+  _overflowButton.dimsBackground = NO;
+  _overflowButton.hidesShadow = NO;
+  _overflowButton.menuItemHeight = 50.0f;
+  _overflowButton.widthMultiplier = 0.5f;
   _overflowButton.menuMargins = MenuMarginsMake(10.0f, 10.0f, 10.0f);
   _overflowButton.menuBackgroundColor = [UIColor whiteColor];
   _overflowButton.itemTextColor = [UIColor blackColor];
