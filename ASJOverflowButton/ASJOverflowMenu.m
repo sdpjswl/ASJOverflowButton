@@ -44,12 +44,13 @@ static NSString *const kCellIdentifier = @"cell";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraint;
-@property (weak, nonatomic) NSLayoutConstraint *widthConstraintForNewMultiplier;
+@property (weak, nonatomic) NSLayoutConstraint *widthConstraintForMultiplier;
 
 - (void)setupTable;
 - (void)setupContentView;
-- (UITableViewCell *)customisedCellFromCell:(UITableViewCell *)cell;
+- (void)setupShadow;
 - (void)reloadTable;
+- (void)customiseCell:(UITableViewCell *)cell;
 
 @end
 
@@ -64,6 +65,8 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)layoutSubviews
 {
   [super layoutSubviews];
+  
+  // fixes shadow being drawn incorrectly
   [self layoutIfNeeded];
   
   if (_hidesShadow == NO) {
@@ -72,63 +75,6 @@ static NSString *const kCellIdentifier = @"cell";
   else {
     _tableContainerView.layer.shadowPath = nil;
   }
-}
-
-#pragma mark - Setup
-
-- (void)setupTable
-{
-  _itemsTableView.bounces = NO;
-  _itemsTableView.clipsToBounds = YES;
-  _itemsTableView.delaysContentTouches = NO;
-  _itemsTableView.backgroundColor = [UIColor clearColor];
-  _itemsTableView.tableFooterView = [[UIView alloc] init];
-  _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  
-  Class cellClass = [UITableViewCell class];
-  [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
-}
-
-- (void)setupContentView
-{
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
-  tap.delegate = self;
-  [_contentView addGestureRecognizer:tap];
-}
-
-#pragma mark - Touch handling
-
-- (void)contentViewTapped:(UITapGestureRecognizer *)tap
-{
-  [self removeView];
-}
-
-/**
- *  Thanks: http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt
- *  don't allow content view's tap gesture to be detected inside table view
- */
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-  CGPoint location = [touch locationInView:self];
-  UIView *view = [self hitTest:location withEvent:nil];
-  if ([view isDescendantOfView:_itemsTableView])
-  {
-    CGPoint tapPoint = [self convertPoint:location toView:_itemsTableView];
-    NSIndexPath *idxPath = [_itemsTableView indexPathForRowAtPoint:tapPoint];
-    if (!idxPath) {
-      [self removeView];
-    }
-    return NO;
-  }
-  return YES;
-}
-
-#pragma mark - Property setters
-
-- (void)setItems:(NSArray *)items
-{
-  _items = items;
-  [self layoutIfNeeded];
 }
 
 - (void)setupShadow
@@ -142,6 +88,118 @@ static NSString *const kCellIdentifier = @"cell";
   _tableContainerView.layer.shadowPath = shadowPath.CGPath;
 }
 
+#pragma mark - Setup
+
+- (void)setupTable
+{
+  _itemsTableView.bounces = NO;
+  _itemsTableView.opaque = YES;
+  _itemsTableView.clipsToBounds = YES;
+  _itemsTableView.delaysContentTouches = NO;
+  _itemsTableView.tableFooterView = [[UIView alloc] init];
+  _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
+  Class cellClass = [UITableViewCell class];
+  [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
+}
+
+#pragma mark - Content view
+
+- (void)setupContentView
+{
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
+  tap.delegate = self;
+  [_contentView addGestureRecognizer:tap];
+}
+
+- (void)contentViewTapped:(UITapGestureRecognizer *)tap
+{
+  [self hideMenu];
+}
+
+- (void)hideMenu
+{
+  if (_hideMenuBlock) {
+    _hideMenuBlock();
+  }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+  return [touch.view isDescendantOfView:_itemsTableView] != YES;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return _items.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+  [self customiseCell:cell];
+  
+  ASJOverflowItem *item = _items[indexPath.row];
+  cell.textLabel.text = item.name;
+  if (item.image) {
+    cell.imageView.image = item.image;
+  }
+  return cell;
+}
+
+- (void)customiseCell:(UITableViewCell *)cell
+{
+  if ([cell respondsToSelector:@selector(setSeparatorInset:)])
+  {
+    cell.separatorInset = UIEdgeInsetsZero;
+  }
+  if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
+  {
+    cell.preservesSuperviewLayoutMargins = NO;
+  }
+  if ([cell respondsToSelector:@selector(setLayoutMargins:)])
+  {
+    cell.layoutMargins = UIEdgeInsetsZero;
+  }
+  
+//  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  cell.backgroundColor = _menuBackgroundColor;
+  cell.textLabel.textColor = _itemTextColor;
+  cell.textLabel.font = _itemFont;
+  
+  UIView *background = [[UIView alloc] initWithFrame:cell.contentView.bounds];
+  background.backgroundColor = _itemHighlightedColor;
+  cell.selectedBackgroundView = background;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  return _menuItemHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (_itemTapBlock) {
+    _itemTapBlock(_items[indexPath.row], indexPath.row);
+  }
+  [self hideMenu];
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Property setters
+
+- (void)setItems:(NSArray *)items
+{
+  _items = items;
+  [self reloadTable];
+}
+
 - (void)setMenuBackgroundColor:(UIColor *)menuBackgroundColor
 {
   _menuBackgroundColor = menuBackgroundColor;
@@ -151,6 +209,12 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)setItemTextColor:(UIColor *)itemTextColor
 {
   _itemTextColor = itemTextColor;
+  [self reloadTable];
+}
+
+- (void)setItemHighlightedColor:(UIColor *)itemHighlightedColor
+{
+  _itemHighlightedColor = itemHighlightedColor;
   [self reloadTable];
 }
 
@@ -168,7 +232,6 @@ static NSString *const kCellIdentifier = @"cell";
   if (!dimsBackground) {
     color = [UIColor clearColor];
   }
-  
   _contentView.backgroundColor = color;
 }
 
@@ -191,11 +254,11 @@ static NSString *const kCellIdentifier = @"cell";
 {
   NSAssert(widthMultiplier >= 0.0f && widthMultiplier <= 1.0f, @"Width multiplier must range from 0 to 1.");
   _widthMultiplier = widthMultiplier;
-  _widthConstraint = self.widthConstraintForNewMultiplier;
+  _widthConstraint = self.widthConstraintForMultiplier;
   _widthConstraint.active = YES;
 }
 
-- (NSLayoutConstraint *)widthConstraintForNewMultiplier
+- (NSLayoutConstraint *)widthConstraintForMultiplier
 {
   return [NSLayoutConstraint
           constraintWithItem:_widthConstraint.firstItem
@@ -229,87 +292,6 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)reloadTable
 {
   [_itemsTableView reloadData];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return _items.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-  cell = [self customisedCellFromCell:cell];
-  
-  ASJOverflowItem *item = _items[indexPath.row];
-  cell.textLabel.text = item.name;
-  if (item.image) {
-    cell.imageView.image = item.image;
-  }
-  return cell;
-}
-
-- (UITableViewCell *)customisedCellFromCell:(UITableViewCell *)cell
-{
-  if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-    [cell setSeparatorInset:UIEdgeInsetsZero];
-  }
-  if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-    [cell setPreservesSuperviewLayoutMargins:NO];
-  }
-  if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-    [cell setLayoutMargins:UIEdgeInsetsZero];
-  }
-  
-  if (_menuBackgroundColor) {
-    cell.backgroundColor = _menuBackgroundColor;
-  }
-  else {
-    cell.backgroundColor = [UIColor whiteColor];
-  }
-  
-  if (_itemTextColor) {
-    cell.textLabel.textColor = _itemTextColor;
-  }
-  else {
-    cell.textLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
-  }
-  
-  if (_itemFont) {
-    cell.textLabel.font = _itemFont;
-  }
-  else {
-    cell.textLabel.font = [UIFont systemFontOfSize:13.0f];
-  }
-  
-  return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  return _menuItemHeight;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  if (_itemTapBlock) {
-    _itemTapBlock(_items[indexPath.row], indexPath.row);
-  }
-  [self removeView];
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - Removal
-
-- (void)removeView
-{
-  if (_menuRemoveBlock) {
-    _menuRemoveBlock();
-  }
 }
 
 @end

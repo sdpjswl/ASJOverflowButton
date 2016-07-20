@@ -64,15 +64,19 @@
 
 - (void)setupOverflowButton
 {
-  _overflowButton = [[ASJOverflowButton alloc] initWithImage:[UIImage imageNamed:@"overflow_icon"] items:_overflowItems];
+  UIImage *image = [UIImage imageNamed:@"overflow_icon"];
+  
+  _overflowButton = [[ASJOverflowButton alloc] initWithImage:image items:_overflowItems];
   _overflowButton.dimsBackground = NO;
   _overflowButton.hidesShadow = NO;
   _overflowButton.menuItemHeight = 50.0f;
   _overflowButton.widthMultiplier = 0.5f;
-  _overflowButton.menuMargins = MenuMarginsMake(10.0f, 10.0f, 10.0f);
-  _overflowButton.menuBackgroundColor = [UIColor whiteColor];
   _overflowButton.itemTextColor = [UIColor blackColor];
+  _overflowButton.menuBackgroundColor = [UIColor whiteColor];
+  _overflowButton.itemHighlightedColor = [UIColor colorWithWhite:0.0f alpha:0.1f];
+  _overflowButton.menuMargins = MenuMarginsMake(10.0f, 10.0f, 10.0f);
   _overflowButton.itemFont = [UIFont fontWithName:@"Verdana" size:13.0f];
+  
   self.navigationItem.rightBarButtonItem = _overflowButton;
 }
 
@@ -87,10 +91,9 @@
      }
    }];
   
-  [_overflowButton setMenuRemoveBlock:^
-   {
-     NSLog(@"hidden");
-   }];
+  [_overflowButton setHideMenuBlock:^{
+    NSLog(@"hidden");
+  }];
 }
 
 @end

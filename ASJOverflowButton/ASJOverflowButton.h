@@ -30,7 +30,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
-typedef void (^MenuRemoveBlock)();
+typedef void (^HideMenuBlock)();
 
 @interface ASJOverflowButton : UIBarButtonItem
 
@@ -45,22 +45,27 @@ typedef void (^MenuRemoveBlock)();
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
 
 /**
- *  The overflow menu items' font. Defaults to system font 17 pt.
+ *  The selected overflow menu item's background color when tapped. Defaults to RGB (217, 217, 217).
+ */
+@property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
+
+/**
+ *  The overflow menu items' font. Defaults to system font 17 pts.
  */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 
 /**
- *  If set YES, the background will be dimmed while the menu is visible. Defaults to NO.
+ *  If set YES, the background will be dimmed while the menu is visible. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL dimsBackground;
 
 /**
- *  If set YES, the shadow around the menu will not be drawn.
+ *  If set YES, the shadow around the menu will not be drawn. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL hidesShadow;
 
 /**
- *  Sets the height of individual overflow menu items. Defaults to 40 pt.
+ *  Sets the height of individual overflow menu items. Defaults to 40 pts.
  */
 @property (assign, nonatomic) CGFloat menuItemHeight;
 
@@ -70,7 +75,7 @@ typedef void (^MenuRemoveBlock)();
 @property (assign, nonatomic) CGFloat widthMultiplier;
 
 /**
- *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pt each.
+ *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pts each.
  */
 @property (assign, nonatomic) MenuMargins menuMargins;
 
@@ -80,9 +85,9 @@ typedef void (^MenuRemoveBlock)();
 @property (nullable, copy) ItemTapBlock itemTapBlock;
 
 /**
- *  A block that is called when any overflow menu item is removed from the screen.
+ *  A block that is called when any overflow menu is removed from the screen.
  */
-@property (nullable, copy) MenuRemoveBlock menuRemoveBlock;
+@property (nullable, copy) HideMenuBlock hideMenuBlock;
 
 /**
  *  The designated initializer.
@@ -106,7 +111,7 @@ typedef void (^MenuRemoveBlock)();
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 - (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;
-- (void)setMenuRemoveBlock:(MenuRemoveBlock _Nullable)menuRemoveBlock;
+- (void)setHideMenuBlock:(HideMenuBlock _Nullable)hideMenuBlock;
 
 @end
 

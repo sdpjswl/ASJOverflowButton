@@ -30,7 +30,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
-typedef void (^MenuRemoveBlock)();
+typedef void (^HideMenuBlock)();
 
 typedef struct MenuMargins
 {
@@ -61,22 +61,27 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (nullable, strong, nonatomic) UIColor *itemTextColor;
 
 /**
- *  The overflow menu items' font. Defaults to system font 17 pt.
+ *  The selected overflow menu item's background color when tapped. Defaults to 'nil'.
+ */
+@property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
+
+/**
+ *  The overflow menu items' font. Defaults to system font 17 pts.
  */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 
 /**
- *  If set YES, the background will be dimmed while the menu is visible. Defaults to NO.
+ *  If set YES, the background will be dimmed while the menu is visible. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL dimsBackground;
 
 /**
- *  If set YES, the shadow around the menu will not be drawn.
+ *  If set YES, the shadow around the menu will not be drawn. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL hidesShadow;
 
 /**
- *  Sets the height of individual overflow menu items. Defaults to 40 pt.
+ *  Sets the height of individual overflow menu items. Defaults to 40 pts.
  */
 @property (assign, nonatomic) CGFloat menuItemHeight;
 
@@ -86,7 +91,7 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (assign, nonatomic) CGFloat widthMultiplier;
 
 /**
- *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pt each.
+ *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pts each.
  */
 @property (assign, nonatomic) MenuMargins menuMargins;
 
@@ -96,12 +101,12 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (nullable, copy) ItemTapBlock itemTapBlock;
 
 /**
- *  A block that is called when any overflow menu item is removed from the screen.
+ *  A block that is called when any overflow menu is removed from the screen.
  */
-@property (nullable, copy) MenuRemoveBlock menuRemoveBlock;
+@property (nullable, copy) HideMenuBlock hideMenuBlock;
 
 - (void)setItemTapBlock:(ItemTapBlock _Nullable)itemTapBlock;
-- (void)setMenuRemoveBlock:(MenuRemoveBlock _Nullable)menuRemoveBlock;
+- (void)setHideMenuBlock:(HideMenuBlock _Nullable)hideMenuBlock;
 
 @end
 

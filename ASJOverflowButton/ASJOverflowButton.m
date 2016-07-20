@@ -27,25 +27,27 @@
 #import <UIKit/UIScreen.h>
 #import <UIKit/UIWindow.h>
 
+#define kDefaultHighlightedColor [UIColor colorWithRed:217/255.0f green:217/255.0f blue:217/255.0f alpha:1.0f]
+
 @interface ASJOverflowButton ()
 
 @property (strong, nonatomic) UIImage *buttonImage;
-@property (copy, nonatomic) NSArray *items;
+@property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
 @property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
 @property (strong, nonatomic) UIWindow *overflowWindow;
+@property (readonly, nonatomic) UIViewAutoresizing autoresizingMasks;
 
 - (void)setup;
 - (void)setupDefaults;
 - (void)validateItems;
 - (void)setupCustomView;
-- (UIButton *)buttonWithImage:(UIImage *)image;
-- (void)overflowButtonTapped:(id)sender;
+- (void)buttonTapped:(id)sender;
 - (void)showMenu;
 - (void)hideMenu;
-- (void)setupOverflowWindow;
-- (void)setupOverflowMenu;
-- (void)handleOverflowBlocks;
-- (void)destroyOverflowWindowAndMenu;
+- (void)setupWindow;
+- (void)setupMenu;
+- (void)handleBlocks;
+- (void)destroyWindowAndMenu;
 
 @end
 
@@ -79,6 +81,7 @@
 {
   _menuBackgroundColor = [UIColor whiteColor];
   _itemTextColor = [UIColor blackColor];
+  _itemHighlightedColor = kDefaultHighlightedColor;
   _itemFont = [UIFont systemFontOfSize:17.0f];
   _dimsBackground = NO;
   _hidesShadow = NO;
@@ -102,19 +105,17 @@
 
 - (void)setupCustomView
 {
-  self.customView = [self buttonWithImage:_buttonImage];
-}
-
-- (UIButton *)buttonWithImage:(UIImage *)image
-{
   UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+  
   button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
-  [button setImage:image forState:UIControlStateNormal];
-  [button addTarget:self action:@selector(overflowButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-  return button;
+  button.autoresizingMask = self.autoresizingMasks;
+  [button setImage:_buttonImage forState:UIControlStateNormal];
+  [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+  
+  self.customView = button;
 }
 
-- (void)overflowButtonTapped:(id)sender
+- (void)buttonTapped:(id)sender
 {
   [self showMenu];
 }
@@ -123,10 +124,11 @@
 
 - (void)showMenu
 {
-  [self setupOverflowWindow];
-  [self setupOverflowMenu];
-  [self handleOverflowBlocks];
+  [self setupWindow];
+  [self setupMenu];
+  [self handleBlocks];
   
+  _overflowMenu.alpha = 0.0f;
   [UIView animateWithDuration:0.4f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState
                    animations:^
    {
@@ -142,43 +144,54 @@
      _overflowMenu.alpha = 0.0f;
    } completion:^(BOOL finished)
    {
-     [self destroyOverflowWindowAndMenu];
+     [self destroyWindowAndMenu];
    }];
 }
 
 #pragma mark - Window + menu
 
-- (void)setupOverflowWindow
+- (void)setupWindow
 {
-  _overflowWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  CGRect screenBounds = [UIScreen mainScreen].bounds;
+  _overflowWindow = [[UIWindow alloc] initWithFrame:screenBounds];
   _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
-  _overflowWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _overflowWindow.autoresizingMask = self.autoresizingMasks;
   
   UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
   _overflowWindow.windowLevel = topWindow.windowLevel + 1;
   [_overflowWindow makeKeyAndVisible];
 }
 
-- (void)setupOverflowMenu
+- (void)setupMenu
 {
   NSString *nibName = NSStringFromClass([ASJOverflowMenu class]);
   _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil].firstObject;
-  _overflowMenu.items = _items;
-  _overflowMenu.alpha = 0.0f;
-  _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
-  _overflowMenu.itemTextColor = _itemTextColor;
-  _overflowMenu.itemFont = _itemFont;
-  _overflowMenu.dimsBackground = _dimsBackground;
-  _overflowMenu.hidesShadow = _hidesShadow;
-  _overflowMenu.menuItemHeight = _menuItemHeight;
-  _overflowMenu.widthMultiplier = _widthMultiplier;
-  _overflowMenu.menuMargins = _menuMargins;
-  _overflowMenu.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  _overflowMenu.autoresizingMask = self.autoresizingMasks;
   _overflowMenu.frame = _overflowWindow.bounds;
+  
+  // look and feel
+  _overflowMenu.items = _items;
+  _overflowMenu.itemFont = _itemFont;
+  _overflowMenu.hidesShadow = _hidesShadow;
+  _overflowMenu.itemTextColor = _itemTextColor;
+  _overflowMenu.dimsBackground = _dimsBackground;
+  _overflowMenu.menuItemHeight = _menuItemHeight;
+  _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
+  _overflowMenu.itemHighlightedColor = _itemHighlightedColor;
+  
+  // size
+  _overflowMenu.menuMargins = _menuMargins;
+  _overflowMenu.widthMultiplier = _widthMultiplier;
+  
   [_overflowWindow addSubview:_overflowMenu];
 }
 
-- (void)handleOverflowBlocks
+- (UIViewAutoresizing)autoresizingMasks
+{
+  return UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+}
+
+- (void)handleBlocks
 {
   __weak typeof(self) weakSelf = self;
   [_overflowMenu setItemTapBlock:^(ASJOverflowItem *item, NSInteger idx)
@@ -188,17 +201,17 @@
      }
    }];
   
-  [_overflowMenu setMenuRemoveBlock:^
+  [_overflowMenu setHideMenuBlock:^
    {
      [weakSelf hideMenu];
      
-     if (weakSelf.menuRemoveBlock) {
-       weakSelf.menuRemoveBlock();
+     if (weakSelf.hideMenuBlock) {
+       weakSelf.hideMenuBlock();
      }
    }];
 }
 
-- (void)destroyOverflowWindowAndMenu
+- (void)destroyWindowAndMenu
 {
   @synchronized (self)
   {
