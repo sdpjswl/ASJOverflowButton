@@ -40,7 +40,7 @@ Sets the text color of the menu items. Defaults to black.
 ```objc
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 ```
-Sets the font of the menu items. Default to system font of size 17.
+Sets the font of the menu items. Defaults to system font of size 17.
 
 ```objc
 @property (assign, nonatomic) BOOL shouldDimBackground;
@@ -61,7 +61,7 @@ Sets the margins of the menu from the top, right and bottom edges of the screen.
 
 ### Limitation
 
-Can ONLY show the overflow menu on the top right corner of the screen.
+Can only show the overflow menu on the top right corner of the screen. From [release 1.2](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.2) however, you can adjust the `menuMargins` property to change the menu position.
 
 # To-do
 
