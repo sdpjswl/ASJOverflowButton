@@ -1,6 +1,6 @@
 # ASJOverflowButton
 
-Working on projects that are simultanously being developed on both iOS and Android can post interesting challenges, especially concerning the look and feel of both apps. There are standard controls on both platforms that are not available in the other. Overflow menu is one of them. This library is a `UIBarButtonItem` subclass that you can put on a navigation bar and an overflow menu will be presented on its tap.
+Working on projects that are simultanously being developed on both iOS and Android can post interesting challenges, especially concerning the look and feel of both apps. There are standard controls on both platforms that are not available in the other. [Overflow menu](https://developer.android.com/design/patterns/actionbar.html) is one of them. This library is a `UIBarButtonItem` subclass that you can put on a navigation bar and an overflow menu will be presented on its tap.
 
 # Installation
 
@@ -38,14 +38,29 @@ Sets the background color of the overflow menu. Defaults to white.
 Sets the text color of the menu items. Defaults to black.
 
 ```objc
+@property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
+```
+Sets the menu item's background color when tapped. Defaults to RGB (217, 217, 217).
+
+```objc
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 ```
-Sets the font of the menu items. Defaults to system font of size 17.
+Sets the font of the menu items. Defaults to system font of size 17 pts.
 
 ```objc
 @property (assign, nonatomic) BOOL shouldDimBackground;
 ```
-Dims the background when menu is showing. Defaults to no.
+Dims the background when menu is showing. Defaults to `NO`.
+
+```objc
+@property (assign, nonatomic) BOOL hidesShadow;
+```
+Hides the shadow around the menu. Defaults to 'NO'.
+
+```objc
+@property (assign, nonatomic) CGFloat menuItemHeight;
+```
+Sets the height of individual overflow menu items. Defaults to 40 pts.
 
 ```objc
 @property (assign, nonatomic) CGFloat widthMultiplier;
@@ -55,9 +70,10 @@ A ratio to set the menu width with respect to the screen width. Acceptable value
 ```objc
 @property (assign, nonatomic) MenuMargins menuMargins;
 ```
-Sets the margins of the menu from the top, right and bottom edges of the screen. Menu will always appear below the status bar. Defaults to 5 each.
+Sets the margins of the menu from the top, right and bottom edges of the screen. Menu will always appear below the status bar. Defaults to 5 pts each.
 
-![alt tag](Screenshot.png)
+![alt tag](Images/Normal.png)
+![alt tag](Images/Dimmed.png)
 
 ### Limitation
 
