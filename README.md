@@ -19,7 +19,7 @@ ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithImage:anI
 self.navigationItem.rightBarButtonItem = overflowButton;
 ```
 
-The items need to be on type `ASJOverflowItem`. Constructor method is provided to generate them. Just attach an array of these during initialisation.
+The items need to be on type `ASJOverflowItem`. Constructor method is provided to generate them. Just attach an array of these during initialization.
 
 ```objc
 ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image];
