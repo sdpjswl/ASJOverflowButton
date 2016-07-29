@@ -55,7 +55,7 @@ Dims the background when menu is showing. Defaults to `NO`.
 ```objc
 @property (assign, nonatomic) BOOL hidesShadow;
 ```
-Hides the shadow around the menu. Defaults to 'NO'.
+Hides the shadow around the menu. Defaults to `NO`.
 
 ```objc
 @property (assign, nonatomic) CGFloat menuItemHeight;
