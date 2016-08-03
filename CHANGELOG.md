@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.3)
+Released on Wednesday, 3 Aug, 2016.
+
+#### Added
+* Added new property 'dimmingLevel' to control the degree to which the background can be dimmed when the menu is shown.
+* Added new property 'menuAnimationType' to change the way the menu is shown; fade in or zoom in.
+
 ## [1.2](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.2)
 Released on Monday, 18 Jul, 2016.
 
