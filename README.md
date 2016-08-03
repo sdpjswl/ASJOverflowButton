@@ -48,14 +48,19 @@ Sets the menu item's background color when tapped. Defaults to RGB (217, 217, 21
 Sets the font of the menu items. Defaults to system font of size 17 pts.
 
 ```objc
+@property (assign, nonatomic) BOOL hidesShadow;
+```
+Hides the shadow around the menu. Defaults to `NO`.
+
+```objc
 @property (assign, nonatomic) BOOL shouldDimBackground;
 ```
 Dims the background when menu is showing. Defaults to `NO`.
 
 ```objc
-@property (assign, nonatomic) BOOL hidesShadow;
+@property (assign, nonatomic) CGFloat dimmingLevel;
 ```
-Hides the shadow around the menu. Defaults to `NO`.
+Sets the degree to which the background is dimmed when menu is shown. Will work only if `shouldDimBackground ` is set to `YES`. Ranges from 0.0 to 1.0. Defaults to 0.6.
 
 ```objc
 @property (assign, nonatomic) CGFloat menuItemHeight;
@@ -66,6 +71,11 @@ Sets the height of individual overflow menu items. Defaults to 40 pts.
 @property (assign, nonatomic) CGFloat widthMultiplier;
 ```
 A ratio to set the menu width with respect to the screen width. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
+
+```objc
+@property (assign, nonatomic) MenuAnimationType menuAnimationType;
+```
+Sets the way the menu should be shown. There are two options, fading it in or zooming in from the top right corner. Defaults to `MenuAnimationTypeZoomIn`.
 
 ```objc
 @property (assign, nonatomic) MenuMargins menuMargins;
@@ -81,15 +91,16 @@ Can only show the overflow menu on the top right corner of the screen. From [rel
 
 # To-do
 
-- ~~Menu closes abruptly when tapped outside.~~
-- ~~Menu should close when tapped on the clear table view outside the items.~~
-- ~~Allow a menu to be created with a title.~~
-- ~~Some way to adjust width of the menu.~~
-- Maybe some way to show menu on both, left and right sides?
-- Gradient at bottom to hint scrolling.
+- ~~Menu closes abruptly when tapped outside~~
+- ~~Menu should close when tapped on the clear table view outside the items~~
+- ~~Allow a menu to be created with a title~~
+- ~~Some way to adjust width of the menu~~
+- Maybe some way to show menu on both, left and right sides
+- Gradient at bottom to hint scrolling
 
 # Credits
 
+- To [Shashank Pali](https://github.com/shashankpali) to make the menu zoom in code work
 - [UITableView passes touch events to superview when it shouldn't](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt)
 - [Can i change multiplier property for NSLayoutConstraint?](http://stackoverflow.com/questions/19593641/can-i-change-multiplier-property-for-nslayoutconstraint#comment54574185_27831003)
 - [Which is the best way to suppress “unused variable” warning?](http://stackoverflow.com/questions/17622237/which-is-the-best-way-to-suppress-unused-variable-warning)
