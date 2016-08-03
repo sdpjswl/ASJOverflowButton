@@ -100,7 +100,7 @@ Can only show the overflow menu on the top right corner of the screen. From [rel
 
 # Credits
 
-- To [Shashank Pali](https://github.com/shashankpali) to make the menu zoom in code work
+- To [Shashank Pali](https://github.com/shashankpali) to make the menu zoom in code work - Read a [blog post](https://xcodestack.blogspot.in/2016/08/scale-view-from-anywhere.html) about it
 - [UITableView passes touch events to superview when it shouldn't](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt)
 - [Can i change multiplier property for NSLayoutConstraint?](http://stackoverflow.com/questions/19593641/can-i-change-multiplier-property-for-nslayoutconstraint#comment54574185_27831003)
 - [Which is the best way to suppress “unused variable” warning?](http://stackoverflow.com/questions/17622237/which-is-the-best-way-to-suppress-unused-variable-warning)
