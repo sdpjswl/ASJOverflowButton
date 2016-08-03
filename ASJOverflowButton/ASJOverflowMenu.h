@@ -1,7 +1,7 @@
 //
 // ASJOverflowMenu.h
 //
-// Copyright (c) 2015 Sudeep Jaiswal
+// Copyright (c) 2015-2016 Sudeep Jaiswal
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
 typedef void (^HideMenuBlock)();
+
+typedef NS_ENUM(NSInteger, MenuAnimationType)
+{
+  MenuAnimationTypeZoomIn,
+  MenuAnimationTypeFadeIn
+};
 
 typedef struct MenuMargins
 {
@@ -71,14 +77,19 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 
 /**
+ *  If set YES, the shadow around the menu will not be drawn. Defaults to 'NO'.
+ */
+@property (assign, nonatomic) BOOL hidesShadow;
+
+/**
  *  If set YES, the background will be dimmed while the menu is visible. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL dimsBackground;
 
 /**
- *  If set YES, the shadow around the menu will not be drawn. Defaults to 'NO'.
+ *  Sets the degree to which the background is dimmed when menu is shown. Will work only if `shouldDimBackground ` is set to `YES`. Ranges from 0.0 to 1.0. Defaults to 0.6.
  */
-@property (assign, nonatomic) BOOL hidesShadow;
+@property (assign, nonatomic) CGFloat dimmingLevel;
 
 /**
  *  Sets the height of individual overflow menu items. Defaults to 40 pts.
@@ -94,6 +105,11 @@ static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bo
  *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pts each.
  */
 @property (assign, nonatomic) MenuMargins menuMargins;
+
+/**
+ *  Set which way the menu show be shown; options including fading it in or zooming in from the top right corner. Defaults to 'MenuAnimationZoomIn'.
+ */
+@property (assign, nonatomic) MenuAnimationType menuAnimation;
 
 /**
  *  A block that is called when any overflow menu item is tapped.

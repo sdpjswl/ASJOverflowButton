@@ -67,14 +67,16 @@
   UIImage *image = [UIImage imageNamed:@"overflow_icon"];
   
   _overflowButton = [[ASJOverflowButton alloc] initWithImage:image items:_overflowItems];
-  _overflowButton.dimsBackground = NO;
+  _overflowButton.dimsBackground = YES;
   _overflowButton.hidesShadow = NO;
+  _overflowButton.dimmingLevel = 0.3f;
   _overflowButton.menuItemHeight = 50.0f;
   _overflowButton.widthMultiplier = 0.5f;
   _overflowButton.itemTextColor = [UIColor blackColor];
   _overflowButton.menuBackgroundColor = [UIColor whiteColor];
   _overflowButton.itemHighlightedColor = [UIColor colorWithWhite:0.0f alpha:0.1f];
-  _overflowButton.menuMargins = MenuMarginsMake(10.0f, 10.0f, 10.0f);
+  _overflowButton.menuMargins = MenuMarginsMake(7.0f, 7.0f, 7.0f);
+  _overflowButton.menuAnimationType = MenuAnimationTypeZoomIn;
   _overflowButton.itemFont = [UIFont fontWithName:@"Verdana" size:13.0f];
   
   self.navigationItem.rightBarButtonItem = _overflowButton;

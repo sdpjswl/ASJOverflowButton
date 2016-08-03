@@ -1,7 +1,7 @@
 //
 // ASJOverflowMenu.m
 //
-// Copyright (c) 2015 Sudeep Jaiswal
+// Copyright (c) 2015-2016 Sudeep Jaiswal
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -45,10 +45,13 @@ static NSString *const kCellIdentifier = @"cell";
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *widthConstraint;
 @property (weak, nonatomic) NSLayoutConstraint *widthConstraintForMultiplier;
+@property (assign, nonatomic) BOOL hasAnimatedMenu;
+@property (readonly, nonatomic) CGSize screenSize;
 
 - (void)setupTable;
 - (void)setupContentView;
 - (void)setupShadow;
+- (void)animateMenu;
 - (void)reloadTable;
 - (void)customiseCell:(UITableViewCell *)cell;
 
@@ -58,6 +61,9 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)awakeFromNib
 {
+  // menu us animated in layoutSubviews. since it should only happen once, a BOOL.
+  _hasAnimatedMenu = NO;
+  
   [self setupTable];
   [self setupContentView];
 }
@@ -69,16 +75,17 @@ static NSString *const kCellIdentifier = @"cell";
   // fixes shadow being drawn incorrectly
   [self layoutIfNeeded];
   
-  if (_hidesShadow == NO) {
-    [self setupShadow];
-  }
-  else {
-    _tableContainerView.layer.shadowPath = nil;
-  }
+  [self setupShadow];
+  [self animateMenu];
 }
 
 - (void)setupShadow
 {
+  if (_hidesShadow == YES)
+  {
+    _tableContainerView.layer.shadowPath = nil;
+    return;
+  }
   _tableContainerView.layer.masksToBounds = NO;
   _tableContainerView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
   _tableContainerView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
@@ -86,6 +93,38 @@ static NSString *const kCellIdentifier = @"cell";
   
   UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_tableContainerView.bounds];
   _tableContainerView.layer.shadowPath = shadowPath.CGPath;
+}
+
+#pragma mark - Animate menu
+
+- (void)animateMenu
+{
+  // fade in happens by default
+  if (_menuAnimation == MenuAnimationTypeFadeIn) {
+    return;
+  }
+  
+  // don't allow it twice
+  if (_hasAnimatedMenu == YES) {
+    return;
+  }
+  
+  // thanks Shashank
+  CGAffineTransform scale = CGAffineTransformMakeScale(0.0f, 0.0f);
+  _tableContainerView.transform = CGAffineTransformConcat(scale, scale);
+  
+  _tableContainerView.layer.anchorPoint = CGPointMake(1.0f, 0.0f);
+  _tableContainerView.layer.position = CGPointMake(self.screenSize.width - _rightConstraint.constant, _topConstraint.constant);
+  _tableContainerView.alpha = 0.0f;
+  
+  [UIView animateWithDuration:0.4f animations:^
+   {
+     _tableContainerView.alpha = 1.0f;
+     _tableContainerView.transform = CGAffineTransformIdentity;
+   } completion:^(BOOL finished)
+   {
+     _hasAnimatedMenu = YES;
+   }];
 }
 
 #pragma mark - Setup
@@ -166,7 +205,6 @@ static NSString *const kCellIdentifier = @"cell";
     cell.layoutMargins = UIEdgeInsetsZero;
   }
   
-//  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   cell.backgroundColor = _menuBackgroundColor;
   cell.textLabel.textColor = _itemTextColor;
   cell.textLabel.font = _itemFont;
@@ -224,21 +262,33 @@ static NSString *const kCellIdentifier = @"cell";
   [self reloadTable];
 }
 
-- (void)setDimsBackground:(BOOL)dimsBackground
-{
-  _dimsBackground = dimsBackground;
-  UIColor *color = [UIColor colorWithWhite:0.0f alpha:0.6f];
-  
-  if (!dimsBackground) {
-    color = [UIColor clearColor];
-  }
-  _contentView.backgroundColor = color;
-}
-
 - (void)setHidesShadow:(BOOL)hidesShadow
 {
   _hidesShadow = hidesShadow;
   [self layoutIfNeeded];
+}
+
+- (void)setDimsBackground:(BOOL)dimsBackground
+{
+  _dimsBackground = dimsBackground;
+  [self dimBackground];
+}
+
+- (void)setDimmingLevel:(CGFloat)dimmingLevel
+{
+  NSAssert(dimmingLevel >= 0.0f && dimmingLevel <= 1.0f, @"Dimming level must range from 0 to 1.");
+  _dimmingLevel = dimmingLevel;
+  [self dimBackground];
+}
+
+- (void)dimBackground
+{
+  UIColor *color = [UIColor colorWithWhite:0.0f alpha:_dimmingLevel];
+  
+  if (!_dimsBackground) {
+    color = [UIColor clearColor];
+  }
+  _contentView.backgroundColor = color;
 }
 
 - (void)setMenuItemHeight:(CGFloat)menuItemHeight
@@ -278,7 +328,7 @@ static NSString *const kCellIdentifier = @"cell";
   _rightConstraint.constant = menuMargins.right;
   
   CGFloat menuSize = _menuItemHeight * _items.count;
-  CGFloat screenHeight =  [UIScreen mainScreen].bounds.size.height;
+  CGFloat screenHeight =  self.screenSize.height;
   CGFloat bottomConstant = screenHeight - menuSize - _topConstraint.constant;
   
   if (bottomConstant < menuMargins.bottom) {
@@ -292,6 +342,13 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)reloadTable
 {
   [_itemsTableView reloadData];
+}
+
+#pragma mark - Property getter
+
+- (CGSize)screenSize
+{
+  return [UIScreen mainScreen].bounds.size;
 }
 
 @end

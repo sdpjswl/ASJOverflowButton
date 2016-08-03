@@ -1,7 +1,7 @@
 //
 // ASJOverflowButton.m
 //
-// Copyright (c) 2015 Sudeep Jaiswal
+// Copyright (c) 2015-2016 Sudeep Jaiswal
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 // THE SOFTWARE.
 
 #import "ASJOverflowButton.h"
+#import <QuartzCore/CALayer.h>
 #import <UIKit/UIButton.h>
 #import <UIKit/UINibLoading.h>
 #import <UIKit/UIScreen.h>
@@ -32,9 +33,9 @@
 @interface ASJOverflowButton ()
 
 @property (strong, nonatomic) UIImage *buttonImage;
-@property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
-@property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
 @property (strong, nonatomic) UIWindow *overflowWindow;
+@property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
+@property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
 @property (readonly, nonatomic) UIViewAutoresizing autoresizingMasks;
 
 - (void)setup;
@@ -83,10 +84,12 @@
   _itemTextColor = [UIColor blackColor];
   _itemHighlightedColor = kDefaultHighlightedColor;
   _itemFont = [UIFont systemFontOfSize:17.0f];
-  _dimsBackground = NO;
   _hidesShadow = NO;
+  _dimsBackground = NO;
+  _dimmingLevel = 0.6f;
   _menuItemHeight = 40.0f;
   _widthMultiplier = 0.4f;
+  _menuAnimationType = MenuAnimationTypeZoomIn;
   _menuMargins = MenuMarginsMake(5.0f, 5.0f, 5.0f);
 }
 
@@ -95,8 +98,7 @@
   for (id object in _items)
   {
     NSAssert([object isMemberOfClass:[ASJOverflowItem class]], @"All items must be of type ASJOverflowItem");
-    ASJOverflowItem *item = (ASJOverflowItem *)object;
-#pragma unused(item)
+    __attribute__((unused)) ASJOverflowItem *item = (ASJOverflowItem *)object;
     NSAssert(item.name, @"ASJOverflowItem's 'name' must not be nil; 'image' is optional.");
   }
 }
@@ -175,6 +177,8 @@
   _overflowMenu.hidesShadow = _hidesShadow;
   _overflowMenu.itemTextColor = _itemTextColor;
   _overflowMenu.dimsBackground = _dimsBackground;
+  _overflowMenu.dimmingLevel = _dimmingLevel;
+  _overflowMenu.menuAnimation = _menuAnimationType;
   _overflowMenu.menuItemHeight = _menuItemHeight;
   _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
   _overflowMenu.itemHighlightedColor = _itemHighlightedColor;
