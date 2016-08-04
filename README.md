@@ -53,7 +53,7 @@ Sets the font of the menu items. Defaults to system font of size 17 pts.
 Hides the shadow around the menu. Defaults to `NO`.
 
 ```objc
-@property (assign, nonatomic) BOOL shouldDimBackground;
+@property (assign, nonatomic) BOOL dimsBackground;
 ```
 Dims the background when menu is showing. Defaults to `NO`.
 

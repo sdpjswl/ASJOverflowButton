@@ -65,7 +65,7 @@ typedef void (^HideMenuBlock)();
 @property (assign, nonatomic) BOOL dimsBackground;
 
 /**
- *  Sets the degree to which the background is dimmed when menu is shown. Will work only if 'shouldDimBackground' is set to 'YES'. Ranges from 0.0 to 1.0. Defaults to 0.6.
+ *  Sets the degree to which the background is dimmed when menu is shown. Will work only if 'dimsBackground' is set to 'YES'. Ranges from 0.0 to 1.0. Defaults to 0.6.
  */
 @property (assign, nonatomic) CGFloat dimmingLevel;
 
