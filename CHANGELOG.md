@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.3.1](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.3.1)
+Released on Thursday, 4 Aug, 2016.
+
+#### Updated
+* Updated instances throughout the project and readme where 'dimsBackground' was appearing as its old name 'shouldDimBackground'.
+
+
 ## [1.3](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.3)
 Released on Wednesday, 3 Aug, 2016.
 
