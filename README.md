@@ -48,6 +48,11 @@ Sets the menu item's background color when tapped. Defaults to RGB (217, 217, 21
 Sets the font of the menu items. Defaults to system font of size 17 pts.
 
 ```objc
+@property (assign, nonatomic) BOOL hidesSeparator;
+```
+Hides the separator between two menu items. Needs to be set `NO` for `separatorInsets` property to work. Defaults to `YES`.
+
+```objc
 @property (assign, nonatomic) BOOL hidesShadow;
 ```
 Hides the shadow around the menu. Defaults to `NO`.
@@ -73,14 +78,19 @@ Sets the height of individual overflow menu items. Defaults to 40 pts.
 A ratio to set the menu width with respect to the screen width. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
 
 ```objc
-@property (assign, nonatomic) MenuAnimationType menuAnimationType;
+@property (assign, nonatomic) SeparatorInsets separatorInsets;
 ```
-Sets the way the menu should be shown. There are two options, fading it in or zooming in from the top right corner. Defaults to `MenuAnimationTypeZoomIn`.
+Sets the left and right insets of the separator between two menu items. Works only if `hidesSeparator` is set to 'NO'. Defaults to (15.0f, 0.0f).
 
 ```objc
 @property (assign, nonatomic) MenuMargins menuMargins;
 ```
 Sets the margins of the menu from the top, right and bottom edges of the screen. Menu will always appear below the status bar. Defaults to 5 pts each.
+
+```objc
+@property (assign, nonatomic) MenuAnimationType menuAnimationType;
+```
+Sets the way the menu should be shown. There are two options, fading it in or zooming in from the top right corner. Defaults to `MenuAnimationTypeZoomIn`.
 
 ![alt tag](Images/Normal.png)
 ![alt tag](Images/Dimmed.png)
