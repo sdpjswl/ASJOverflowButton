@@ -75,7 +75,7 @@
                 <outlet property="topConstraint" destination="sGV-9K-3M7" id="YRt-jD-M0s"/>
                 <outlet property="widthConstraint" destination="T5h-Uu-P0Q" id="1bK-Ck-uVY"/>
             </connections>
-            <point key="canvasLocation" x="444" y="408"/>
+            <point key="canvasLocation" x="389" y="388"/>
         </view>
     </objects>
 </document>

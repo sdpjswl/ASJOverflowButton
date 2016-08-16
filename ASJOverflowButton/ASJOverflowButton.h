@@ -55,6 +55,11 @@ typedef void (^HideMenuBlock)();
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 
 /**
+ *  It set YES, the separator between two menu items will be hidden. In that case, setting 'separatorInsets' will do nothing. Defaults to 'YES'.
+ */
+@property (assign, nonatomic) BOOL hidesSeparator;
+
+/**
  *  If set YES, the shadow around the menu will not be drawn. Defaults to 'NO'.
  */
 @property (assign, nonatomic) BOOL hidesShadow;
@@ -75,9 +80,14 @@ typedef void (^HideMenuBlock)();
 @property (assign, nonatomic) CGFloat menuItemHeight;
 
 /**
- *  Set the ratio according to which the overflow menu width should be calculated. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
+ *  Sets the ratio according to which the overflow menu width should be calculated. Acceptable values are from 0.0 to 1.0. For example, if your screen width is 320.0 pts and 'widthMultiplier' is set to 0.5, the menu width will be 0.5 * 320.0 = 160 pts. Defaults to 0.4.
  */
 @property (assign, nonatomic) CGFloat widthMultiplier;
+
+/**
+ *  Sets the left and right insets of the separator between two menu items. Works only if 'hidesSeparator' is set to 'NO'. Defaults to (15.0f, 0.0f).
+ */
+@property (assign, nonatomic) SeparatorInsets separatorInsets;
 
 /**
  *  The margins of the menu from the top, right and bottom edges. Defaults to 5 pts each.
@@ -85,7 +95,7 @@ typedef void (^HideMenuBlock)();
 @property (assign, nonatomic) MenuMargins menuMargins;
 
 /**
- *  Set which way the menu should be shown; options including fading it in or zooming in from the top right corner. Defaults to 'MenuAnimationTypeZoomIn'.
+ *  Sets which way the menu should be shown; options including fading it in or zooming in from the top right corner. Defaults to 'MenuAnimationTypeZoomIn'.
  */
 @property (assign, nonatomic) MenuAnimationType menuAnimationType;
 

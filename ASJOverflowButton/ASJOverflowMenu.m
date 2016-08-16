@@ -35,6 +35,32 @@ static NSString *const kCellIdentifier = @"cell";
 
 #define kStatusBarHeight [UIApplication sharedApplication].statusBarFrame.size.height
 
+@interface UITableViewCell (Separators)
+
+- (void)setInsets:(SeparatorInsets)insets;
+
+@end
+
+@implementation UITableViewCell (Separators)
+
+- (void)setInsets:(SeparatorInsets)insets
+{
+  if ([self respondsToSelector:@selector(setSeparatorInset:)])
+  {
+    self.separatorInset = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
+  }
+  if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
+  {
+    self.preservesSuperviewLayoutMargins = NO;
+  }
+  if ([self respondsToSelector:@selector(setLayoutMargins:)])
+  {
+    self.layoutMargins = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
+  }
+}
+
+@end
+
 @interface ASJOverflowMenu () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *itemsTableView;
@@ -136,7 +162,6 @@ static NSString *const kCellIdentifier = @"cell";
   _itemsTableView.clipsToBounds = YES;
   _itemsTableView.delaysContentTouches = NO;
   _itemsTableView.tableFooterView = [[UIView alloc] init];
-  _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   Class cellClass = [UITableViewCell class];
   [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
@@ -192,17 +217,11 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)customiseCell:(UITableViewCell *)cell
 {
-  if ([cell respondsToSelector:@selector(setSeparatorInset:)])
-  {
-    cell.separatorInset = UIEdgeInsetsZero;
+  if (_hidesSeparator) {
+    _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   }
-  if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
-  {
-    cell.preservesSuperviewLayoutMargins = NO;
-  }
-  if ([cell respondsToSelector:@selector(setLayoutMargins:)])
-  {
-    cell.layoutMargins = UIEdgeInsetsZero;
+  else {
+    [cell setInsets:_separatorInsets];
   }
   
   cell.backgroundColor = _menuBackgroundColor;

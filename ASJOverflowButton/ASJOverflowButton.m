@@ -85,11 +85,13 @@
   _itemHighlightedColor = kDefaultHighlightedColor;
   _itemFont = [UIFont systemFontOfSize:17.0f];
   _hidesShadow = NO;
+  _hidesSeparator = YES;
   _dimsBackground = NO;
   _dimmingLevel = 0.6f;
   _menuItemHeight = 40.0f;
   _widthMultiplier = 0.4f;
   _menuAnimationType = MenuAnimationTypeZoomIn;
+  _separatorInsets = SeparatorInsetsMake(15.0f, 0.0f);
   _menuMargins = MenuMarginsMake(5.0f, 5.0f, 5.0f);
 }
 
@@ -175,11 +177,13 @@
   _overflowMenu.items = _items;
   _overflowMenu.itemFont = _itemFont;
   _overflowMenu.hidesShadow = _hidesShadow;
+  _overflowMenu.hidesSeparator = _hidesSeparator;
   _overflowMenu.itemTextColor = _itemTextColor;
   _overflowMenu.dimsBackground = _dimsBackground;
   _overflowMenu.dimmingLevel = _dimmingLevel;
   _overflowMenu.menuAnimation = _menuAnimationType;
   _overflowMenu.menuItemHeight = _menuItemHeight;
+  _overflowMenu.separatorInsets = _separatorInsets;
   _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
   _overflowMenu.itemHighlightedColor = _itemHighlightedColor;
   
