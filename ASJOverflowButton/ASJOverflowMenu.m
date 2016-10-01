@@ -98,11 +98,19 @@ static NSString *const kCellIdentifier = @"cell";
 {
   [super layoutSubviews];
   
-  // fixes shadow being drawn incorrectly
-  [self layoutIfNeeded];
-  
-  [self setupShadow];
-  [self animateMenu];
+  /**
+   *  Fix for Issue #2: https://github.com/sudeepjaiswal/ASJOverflowButton/issues/2
+   *  Thanks: http://stackoverflow.com/a/39647683
+   *  Weirdly, iOS 10 requires this stuff to be done on the main queue, else the menu position and shadow bounds don't set correctly, even though there is a call to focefully layout the view if needed. This was done earlier to fix shadow bounds in iOS 9
+   */
+  [[NSOperationQueue mainQueue] addOperationWithBlock:^
+   {
+     // fixes shadow being drawn incorrectly. worked for iOS 9
+     [self layoutIfNeeded];
+     
+     [self setupShadow];
+     [self animateMenu];
+   }];
 }
 
 - (void)setupShadow
