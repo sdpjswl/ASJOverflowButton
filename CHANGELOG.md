@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.5)
+Released on Saturday, 1 Oct, 2016.
+
+#### Fixed
+* Fixed [issue #2](https://github.com/sudeepjaiswal/ASJOverflowButton/issues/2). Overflow menu shadow drawing incorrectly on iOS 10.
+
 ## [1.4](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.4)
 Released on Tuesday, 16 Aug, 2016.
 
