@@ -26,6 +26,7 @@
 #import <UIKit/UIButton.h>
 #import <UIKit/UINibLoading.h>
 #import <UIKit/UIScreen.h>
+#import <UIKit/UIViewController.h>
 #import <UIKit/UIWindow.h>
 
 #define kDefaultHighlightedColor [UIColor colorWithRed:217/255.0f green:217/255.0f blue:217/255.0f alpha:1.0f]
@@ -160,6 +161,7 @@
   _overflowWindow = [[UIWindow alloc] initWithFrame:screenBounds];
   _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
   _overflowWindow.autoresizingMask = self.autoresizingMasks;
+  _overflowWindow.rootViewController = [[UIViewController alloc] init];
   
   UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
   _overflowWindow.windowLevel = topWindow.windowLevel + 1;
