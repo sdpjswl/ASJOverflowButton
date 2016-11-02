@@ -56,7 +56,7 @@
     NSString *imageName = [NSString stringWithFormat:@"item_%d", i];
     UIImage *image = [UIImage imageNamed:imageName];
     
-    ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image];
+    ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image backgroundColor:nil];
     [temp addObject:item];
   }
   _overflowItems = [NSArray arrayWithArray:temp];
