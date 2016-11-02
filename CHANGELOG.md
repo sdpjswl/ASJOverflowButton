@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.5.2](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.5.2)
+Released on Wednesday, 2 Nov, 2016.
+
+#### Added
+* Added `backgroundColor` property to `ASJOverflowItem` to set color to individual items.
+
 ## [1.5.1](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.5.1)
 Released on Wednesday, 2 Nov, 2016.
 
