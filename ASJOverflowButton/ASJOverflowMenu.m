@@ -79,7 +79,7 @@ static NSString *const kCellIdentifier = @"cell";
 - (void)setupShadow;
 - (void)animateMenu;
 - (void)reloadTable;
-- (void)customiseCell:(UITableViewCell *)cell;
+- (void)customizeCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)idxPath;
 
 @end
 
@@ -213,20 +213,11 @@ static NSString *const kCellIdentifier = @"cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-  [self customiseCell:cell];
-  
-  ASJOverflowItem *item = _items[indexPath.row];
-  cell.textLabel.text = item.name;
-  if (item.image) {
-    cell.imageView.image = item.image;
-  }
-  else {
-    cell.imageView.image = nil;
-  }
+  [self customizeCell:cell atIndexPath:indexPath];
   return cell;
 }
 
-- (void)customiseCell:(UITableViewCell *)cell
+- (void)customizeCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)idxPath
 {
   if (_hidesSeparator) {
     _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -242,6 +233,24 @@ static NSString *const kCellIdentifier = @"cell";
   UIView *background = [[UIView alloc] initWithFrame:cell.contentView.bounds];
   background.backgroundColor = _itemHighlightedColor;
   cell.selectedBackgroundView = background;
+  
+  ASJOverflowItem *item = _items[idxPath.row];
+  cell.textLabel.text = item.name;
+  cell.textLabel.backgroundColor = [UIColor clearColor];
+  
+  if (item.image != nil) {
+    cell.imageView.image = item.image;
+  }
+  else {
+    cell.imageView.image = nil;
+  }
+  
+  if (item.backgroundColor != nil) {
+    cell.contentView.backgroundColor = item.backgroundColor;
+  }
+  else {
+    cell.contentView.backgroundColor = nil;
+  }
 }
 
 #pragma mark - UITableViewDelegate
