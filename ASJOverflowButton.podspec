@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name          = 'ASJOverflowButton'
-  s.version       = '1.5'
+  s.version       = '1.5.1'
   s.platform      = :ios, '7.0'
   s.license       = { :type => 'MIT' }
   s.homepage      = 'https://github.com/sudeepjaiswal/ASJOverflowButton'
