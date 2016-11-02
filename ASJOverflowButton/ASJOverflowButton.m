@@ -245,11 +245,12 @@
   return item;
 }
 
-+ (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image
++ (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image backgroundColor:(nullable UIColor *)backgroundColor
 {
   ASJOverflowItem *item = [[ASJOverflowItem alloc] init];
   item.name = name;
   item.image = image;
+  item.backgroundColor = backgroundColor;
   return item;
 }
 

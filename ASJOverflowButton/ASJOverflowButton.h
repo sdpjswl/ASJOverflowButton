@@ -148,6 +148,11 @@ typedef void (^HideMenuBlock)();
 @property (nullable, strong, nonatomic) UIImage *image;
 
 /**
+ *  The overflow item's background color. Optional.
+ */
+@property (nullable, strong, nonatomic) UIColor *backgroundColor;
+
+/**
  *  A convenience constructor to create ASJOverflowItems.
  *
  *  @param name  The overflow item's name.
@@ -161,10 +166,11 @@ typedef void (^HideMenuBlock)();
  *
  *  @param name  The overflow item's name.
  *  @param image The overflow item's image. Optional.
+ *  @param image The overflow item's background color. Optional.
  *
  *  @return An instance of ASJOverflowItem.
  */
-+ (ASJOverflowItem *)itemWithName:(NSString *)name image:(nullable UIImage *)image;
++ (ASJOverflowItem *)itemWithName:(NSString *)name image:(nullable UIImage *)image backgroundColor:(nullable UIColor *)backgroundColor;
 
 @end
 
