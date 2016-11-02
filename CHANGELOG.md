@@ -1,5 +1,12 @@
 # Change Log
 
+## [1.5.1](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.5.1)
+Released on Wednesday, 2 Nov, 2016.
+
+#### Fixed
+* Partly fixed [issue #3](https://github.com/sudeepjaiswal/ASJOverflowButton/issues/3). Menu opens correctly if opened in landscape orientation.
+* Fixed UI bug while scrolling the menu if only some items have image.
+
 ## [1.5](https://github.com/sudeepjaiswal/ASJOverflowButton/releases/tag/1.5)
 Released on Saturday, 1 Oct, 2016.
 
