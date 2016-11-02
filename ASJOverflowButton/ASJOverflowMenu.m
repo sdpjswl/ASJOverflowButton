@@ -220,6 +220,9 @@ static NSString *const kCellIdentifier = @"cell";
   if (item.image) {
     cell.imageView.image = item.image;
   }
+  else {
+    cell.imageView.image = nil;
+  }
   return cell;
 }
 
