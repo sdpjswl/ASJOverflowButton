@@ -22,10 +22,10 @@ self.navigationItem.rightBarButtonItem = overflowButton;
 The items need to be on type `ASJOverflowItem`. Constructor method is provided to generate them. Just attach an array of these during initialization.
 
 ```objc
-ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image];
+ASJOverflowItem *item = [ASJOverflowItem itemWithName:itemName image:image backgroundColor:color];
 ```
 
-The are a few properties to customise the look and feel of the overflow menu.
+The are a few properties to customize the look and feel of the overflow menu.
 
 ```objc
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
