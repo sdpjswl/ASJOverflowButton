@@ -171,7 +171,9 @@
 - (void)setupMenu
 {
   NSString *nibName = NSStringFromClass([ASJOverflowMenu class]);
-  _overflowMenu = (ASJOverflowMenu *)[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil].firstObject;
+  NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+  
+  _overflowMenu = (ASJOverflowMenu *)[bundle loadNibNamed:nibName owner:nil options:nil].firstObject;
   _overflowMenu.autoresizingMask = self.autoresizingMasks;
   _overflowMenu.frame = _overflowWindow.bounds;
   
