@@ -295,6 +295,18 @@ static NSString *const kCellIdentifier = @"cell";
   [self reloadTable];
 }
 
+- (void)setBorderColor:(UIColor *)borderColor
+{
+  _borderColor = borderColor;
+  _tableContainerView.layer.borderColor = borderColor.CGColor;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth
+{
+  _borderWidth = borderWidth;
+  _tableContainerView.layer.borderWidth = borderWidth;
+}
+
 - (void)setItemFont:(UIFont *)itemFont
 {
   _itemFont = itemFont;

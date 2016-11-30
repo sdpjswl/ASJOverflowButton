@@ -94,6 +94,8 @@
   _menuAnimationType = MenuAnimationTypeZoomIn;
   _separatorInsets = SeparatorInsetsMake(15.0f, 0.0f);
   _menuMargins = MenuMarginsMake(5.0f, 5.0f, 5.0f);
+  _borderColor = [UIColor grayColor];
+  _borderWidth = 0.0f;
 }
 
 - (void)validateItems
@@ -190,6 +192,8 @@
   _overflowMenu.separatorInsets = _separatorInsets;
   _overflowMenu.menuBackgroundColor = _menuBackgroundColor;
   _overflowMenu.itemHighlightedColor = _itemHighlightedColor;
+  _overflowMenu.borderColor = _borderColor;
+  _overflowMenu.borderWidth = _borderWidth;
   
   // size
   _overflowMenu.menuMargins = _menuMargins;
