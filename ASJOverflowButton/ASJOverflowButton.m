@@ -221,6 +221,7 @@
        weakSelf.hideMenuBlock();
      }
    }];
+  [_overflowMenu setDelegate:_delegate];
 }
 
 - (void)destroyWindowAndMenu

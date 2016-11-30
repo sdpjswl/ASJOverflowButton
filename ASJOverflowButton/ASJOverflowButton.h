@@ -35,6 +35,11 @@ typedef void (^HideMenuBlock)();
 @interface ASJOverflowButton : UIBarButtonItem
 
 /**
+ *  Called in response to menu item selection. Optional.
+ */
+@property (nullable, weak, nonatomic) id <ASJOverflowMenuDelegate> delegate;
+
+/**
  *  The overflow menu's background color. Defaults to white.
  */
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
