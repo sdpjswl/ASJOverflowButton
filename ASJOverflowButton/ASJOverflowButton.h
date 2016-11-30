@@ -153,6 +153,11 @@ typedef void (^HideMenuBlock)();
 @property (nullable, strong, nonatomic) UIColor *backgroundColor;
 
 /**
+ *  A block that is called when the overflow menu item is tapped.
+ */
+@property (nullable, strong, nonatomic) ItemTapBlock itemTapBlock;
+
+/**
  *  A convenience constructor to create ASJOverflowItems.
  *
  *  @param name  The overflow item's name.
@@ -160,6 +165,16 @@ typedef void (^HideMenuBlock)();
  *  @return An instance of ASJOverflowItem.
  */
 + (ASJOverflowItem *)itemWithName:(NSString *)name;
+
+/**
+ *  A convenience constructor to create ASJOverflowItems.
+ *
+ *  @param name  The overflow item's name.
+ *  @param itemtapBlock  A block that gets called when the overflow item is tapped. Optional.
+ *
+ *  @return An instance of ASJOverflowItem.
+ */
++ (ASJOverflowItem *)itemWithName:(NSString *)name tapBlock:(ItemTapBlock)itemTapBlock;
 
 /**
  *  A convenience constructor to create ASJOverflowItems.

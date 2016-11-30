@@ -247,6 +247,14 @@
   return item;
 }
 
++ (ASJOverflowItem *)itemWithName:(NSString *)name tapBlock:(ItemTapBlock)itemTapBlock
+{
+  ASJOverflowItem *item = [[ASJOverflowItem alloc] init];
+  item.name = name;
+  item.itemTapBlock = itemTapBlock;
+  return item;
+}
+
 + (ASJOverflowItem *)itemWithName:(NSString *)name image:(UIImage *)image backgroundColor:(nullable UIColor *)backgroundColor
 {
   ASJOverflowItem *item = [[ASJOverflowItem alloc] init];
