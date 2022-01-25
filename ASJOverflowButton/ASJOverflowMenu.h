@@ -60,7 +60,18 @@ static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
   return insets;
 }
 
+@class ASJOverflowMenu;
+
+@protocol ASJOverflowMenuDelegate <NSObject>
+- (void)overflowMenu:(ASJOverflowMenu *)sender didSelectItem:(ASJOverflowItem *)item atIndex:(NSUInteger)idx;
+@end
+
 @interface ASJOverflowMenu : UIView
+
+/**
+ *  Called in response to menu item selection. Optional.
+ */
+@property (nullable, weak, nonatomic) id <ASJOverflowMenuDelegate> delegate;
 
 /**
  *  An array of ASJOverflowItems to show on the menu.
@@ -81,6 +92,16 @@ static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
  *  The selected overflow menu item's background color when tapped. Defaults to 'nil'.
  */
 @property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
+
+/**
+ *  The overflow menu's border color. Defaults to gray.
+ */
+@property (nullable, strong, nonatomic) UIColor *borderColor;
+
+/**
+ *  The overflow menu's border width. Defaults to zero.
+ */
+@property (nonatomic) CGFloat borderWidth;
 
 /**
  *  The overflow menu items' font. Defaults to system font 17 pts.

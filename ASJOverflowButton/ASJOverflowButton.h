@@ -35,6 +35,11 @@ typedef void (^HideMenuBlock)();
 @interface ASJOverflowButton : UIBarButtonItem
 
 /**
+ *  Called in response to menu item selection. Optional.
+ */
+@property (nullable, weak, nonatomic) id <ASJOverflowMenuDelegate> delegate;
+
+/**
  *  The overflow menu's background color. Defaults to white.
  */
 @property (nullable, strong, nonatomic) UIColor *menuBackgroundColor;
@@ -48,6 +53,16 @@ typedef void (^HideMenuBlock)();
  *  The selected overflow menu item's background color when tapped. Defaults to RGB (217, 217, 217).
  */
 @property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
+
+/**
+ *  The overflow menu's border color. Defaults to gray.
+ */
+@property (nullable, strong, nonatomic) UIColor *borderColor;
+
+/**
+ *  The overflow menu's border width. Defaults to zero.
+ */
+@property (nonatomic) CGFloat borderWidth;
 
 /**
  *  The overflow menu items' font. Defaults to system font 17 pts.
