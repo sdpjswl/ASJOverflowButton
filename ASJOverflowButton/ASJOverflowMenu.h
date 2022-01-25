@@ -83,6 +83,16 @@ static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
 @property (nullable, strong, nonatomic) UIColor *itemHighlightedColor;
 
 /**
+ *  The overflow menu's border color. Defaults to gray.
+ */
+@property (nullable, strong, nonatomic) UIColor *borderColor;
+
+/**
+ *  The overflow menu's border width. Defaults to zero.
+ */
+@property (nonatomic) CGFloat borderWidth;
+
+/**
  *  The overflow menu items' font. Defaults to system font 17 pts.
  */
 @property (nullable, strong, nonatomic) UIFont *itemFont;
