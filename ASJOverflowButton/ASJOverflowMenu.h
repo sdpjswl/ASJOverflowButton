@@ -63,7 +63,9 @@ static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
 @class ASJOverflowMenu;
 
 @protocol ASJOverflowMenuDelegate <NSObject>
+
 - (void)overflowMenu:(ASJOverflowMenu *)sender didSelectItem:(ASJOverflowItem *)item atIndex:(NSUInteger)idx;
+
 @end
 
 @interface ASJOverflowMenu : UIView
