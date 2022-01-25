@@ -176,8 +176,9 @@
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
     _overflowMenu = (ASJOverflowMenu *)[bundle loadNibNamed:nibName owner:nil options:nil].firstObject;
-    _overflowMenu.autoresizingMask = self.autoresizingMasks;
     _overflowMenu.frame = _overflowWindow.bounds;
+    _overflowMenu.autoresizingMask = self.autoresizingMasks;
+    [_overflowWindow addSubview:_overflowMenu];
     
     // look and feel
     _overflowMenu.items = _items;
@@ -198,8 +199,6 @@
     // size
     _overflowMenu.menuMargins = _menuMargins;
     _overflowMenu.widthMultiplier = _widthMultiplier;
-    
-    [_overflowWindow addSubview:_overflowMenu];
 }
 
 - (UIViewAutoresizing)autoresizingMasks
