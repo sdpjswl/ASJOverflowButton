@@ -30,34 +30,34 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
-typedef void (^HideMenuBlock)();
+typedef void (^HideMenuBlock)(void);
 
 typedef NS_ENUM(NSInteger, MenuAnimationType)
 {
-  MenuAnimationTypeZoomIn,
-  MenuAnimationTypeFadeIn
+    MenuAnimationTypeZoomIn,
+    MenuAnimationTypeFadeIn
 };
 
 typedef struct MenuMargins
 {
-  CGFloat top, right, bottom;
+    CGFloat top, right, bottom;
 } MenuMargins;
 
 static inline MenuMargins MenuMarginsMake(CGFloat top, CGFloat right, CGFloat bottom)
 {
-  MenuMargins margins = {top, right, bottom};
-  return margins;
+    MenuMargins margins = {top, right, bottom};
+    return margins;
 }
 
 typedef struct SeparatorInsets
 {
-  CGFloat left, right;
+    CGFloat left, right;
 } SeparatorInsets;
 
 static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
 {
-  SeparatorInsets insets = {left, right};
-  return insets;
+    SeparatorInsets insets = {left, right};
+    return insets;
 }
 
 @class ASJOverflowMenu;

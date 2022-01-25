@@ -30,7 +30,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^ItemTapBlock)(ASJOverflowItem *item, NSInteger idx);
-typedef void (^HideMenuBlock)();
+typedef void (^HideMenuBlock)(void);
 
 @interface ASJOverflowButton : UIBarButtonItem
 
@@ -62,7 +62,7 @@ typedef void (^HideMenuBlock)();
 /**
  *  The overflow menu's border width. Defaults to zero.
  */
-@property (nonatomic) CGFloat borderWidth;
+@property (assign, nonatomic) CGFloat borderWidth;
 
 /**
  *  The overflow menu items' font. Defaults to system font 17 pts.

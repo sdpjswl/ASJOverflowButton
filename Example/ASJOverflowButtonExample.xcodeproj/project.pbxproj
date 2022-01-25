@@ -15,6 +15,7 @@
 		C0080AE61C282ED60009488F /* ASJOverflowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C0080AE51C282ED60009488F /* ASJOverflowButton.m */; };
 		C0080AE91C282F620009488F /* ASJOverflowMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = C0080AE81C282F620009488F /* ASJOverflowMenu.m */; };
 		C0080AEB1C282F6C0009488F /* ASJOverflowMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0080AEA1C282F6C0009488F /* ASJOverflowMenu.xib */; };
+		C0E6CD9B27A0907B0019FC25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0E6CD9927A0907B0019FC25 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		C0080AE71C282F620009488F /* ASJOverflowMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASJOverflowMenu.h; sourceTree = "<group>"; };
 		C0080AE81C282F620009488F /* ASJOverflowMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASJOverflowMenu.m; sourceTree = "<group>"; };
 		C0080AEA1C282F6C0009488F /* ASJOverflowMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ASJOverflowMenu.xib; sourceTree = "<group>"; };
+		C0E6CD9A27A0907B0019FC25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +72,8 @@
 				C0080AD21C282D4F0009488F /* ViewController.h */,
 				C0080AD31C282D4F0009488F /* ViewController.m */,
 				C0080AD51C282D4F0009488F /* Main.storyboard */,
+				C0E6CD9927A0907B0019FC25 /* LaunchScreen.storyboard */,
 				C0080AD81C282D4F0009488F /* Assets.xcassets */,
-				C0080ADD1C282D4F0009488F /* Info.plist */,
 				C0080ACC1C282D4F0009488F /* Supporting Files */,
 			);
 			path = ASJOverflowButtonExample;
@@ -80,6 +82,7 @@
 		C0080ACC1C282D4F0009488F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C0080ADD1C282D4F0009488F /* Info.plist */,
 				C0080ACD1C282D4F0009488F /* main.m */,
 			);
 			name = "Supporting Files";
@@ -124,7 +127,7 @@
 		C0080AC11C282D4F0009488F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = sudeep;
 				TargetAttributes = {
 					C0080AC81C282D4F0009488F = {
@@ -134,7 +137,7 @@
 			};
 			buildConfigurationList = C0080AC41C282D4F0009488F /* Build configuration list for PBXProject "ASJOverflowButtonExample" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0080AD91C282D4F0009488F /* Assets.xcassets in Resources */,
+				C0E6CD9B27A0907B0019FC25 /* LaunchScreen.storyboard in Resources */,
 				C0080AD71C282D4F0009488F /* Main.storyboard in Resources */,
 				C0080AEB1C282F6C0009488F /* ASJOverflowMenu.xib in Resources */,
 			);
@@ -187,6 +191,14 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		C0E6CD9927A0907B0019FC25 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C0E6CD9A27A0907B0019FC25 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -194,17 +206,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -226,7 +250,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -237,17 +261,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -263,7 +299,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -274,7 +310,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				INFOPLIST_FILE = ASJOverflowButtonExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sudeep.ASJOverflowButtonExample;
@@ -286,7 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				INFOPLIST_FILE = ASJOverflowButtonExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sudeep.ASJOverflowButtonExample;

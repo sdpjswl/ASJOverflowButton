@@ -45,18 +45,18 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)setInsets:(SeparatorInsets)insets
 {
-  if ([self respondsToSelector:@selector(setSeparatorInset:)])
-  {
-    self.separatorInset = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
-  }
-  if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
-  {
-    self.preservesSuperviewLayoutMargins = NO;
-  }
-  if ([self respondsToSelector:@selector(setLayoutMargins:)])
-  {
-    self.layoutMargins = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
-  }
+    if ([self respondsToSelector:@selector(setSeparatorInset:)])
+    {
+        self.separatorInset = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
+    }
+    if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)])
+    {
+        self.preservesSuperviewLayoutMargins = NO;
+    }
+    if ([self respondsToSelector:@selector(setLayoutMargins:)])
+    {
+        self.layoutMargins = UIEdgeInsetsMake(0.0f, insets.left, 0.0f, insets.right);
+    }
 }
 
 @end
@@ -87,275 +87,275 @@ static NSString *const kCellIdentifier = @"cell";
 
 - (void)awakeFromNib
 {
-  // menu us animated in layoutSubviews. since it should only happen once, a BOOL.
-  _hasAnimatedMenu = NO;
-  
-  [self setupTable];
-  [self setupContentView];
+    // menu us animated in layoutSubviews. since it should only happen once, a BOOL.
+    _hasAnimatedMenu = NO;
+    
+    [self setupTable];
+    [self setupContentView];
 }
 
 - (void)layoutSubviews
 {
-  [super layoutSubviews];
-  
-  /**
-   *  Fix for Issue #2: https://github.com/sudeepjaiswal/ASJOverflowButton/issues/2
-   *  Thanks: http://stackoverflow.com/a/39647683
-   *  Weirdly, iOS 10 requires this stuff to be done on the main queue, else the menu position and shadow bounds don't set correctly, even though there is a call to focefully layout the view if needed. This was done earlier to fix shadow bounds in iOS 9
-   */
-  [[NSOperationQueue mainQueue] addOperationWithBlock:^
-   {
-     // fixes shadow being drawn incorrectly. worked for iOS 9
-     [self layoutIfNeeded];
-     
-     [self setupShadow];
-     [self animateMenu];
-   }];
+    [super layoutSubviews];
+    
+    /**
+     *  Fix for Issue #2: https://github.com/sudeepjaiswal/ASJOverflowButton/issues/2
+     *  Thanks: http://stackoverflow.com/a/39647683
+     *  Weirdly, iOS 10 requires this stuff to be done on the main queue, else the menu position and shadow bounds don't set correctly, even though there is a call to focefully layout the view if needed. This was done earlier to fix shadow bounds in iOS 9
+     */
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^
+     {
+        // fixes shadow being drawn incorrectly. worked for iOS 9
+        [self layoutIfNeeded];
+        
+        [self setupShadow];
+        [self animateMenu];
+    }];
 }
 
 - (void)setupShadow
 {
-  if (_hidesShadow == YES)
-  {
-    _tableContainerView.layer.shadowPath = nil;
-    return;
-  }
-  _tableContainerView.layer.masksToBounds = NO;
-  _tableContainerView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
-  _tableContainerView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
-  _tableContainerView.layer.shadowOpacity = 1.0f;
-  
-  UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_tableContainerView.bounds];
-  _tableContainerView.layer.shadowPath = shadowPath.CGPath;
+    if (_hidesShadow == YES)
+    {
+        _tableContainerView.layer.shadowPath = nil;
+        return;
+    }
+    _tableContainerView.layer.masksToBounds = NO;
+    _tableContainerView.layer.shadowColor = [UIColor lightGrayColor].CGColor;
+    _tableContainerView.layer.shadowOffset = CGSizeMake(1.0f, -1.0f);
+    _tableContainerView.layer.shadowOpacity = 1.0f;
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:_tableContainerView.bounds];
+    _tableContainerView.layer.shadowPath = shadowPath.CGPath;
 }
 
 #pragma mark - Animate menu
 
 - (void)animateMenu
 {
-  // fade in happens by default
-  if (_menuAnimation == MenuAnimationTypeFadeIn) {
-    return;
-  }
-  
-  // don't allow it twice
-  if (_hasAnimatedMenu == YES) {
-    return;
-  }
-  
-  // thanks Shashank
-  CGAffineTransform scale = CGAffineTransformMakeScale(0.0f, 0.0f);
-  _tableContainerView.transform = CGAffineTransformConcat(scale, scale);
-  
-  _tableContainerView.layer.anchorPoint = CGPointMake(1.0f, 0.0f);
-  _tableContainerView.layer.position = CGPointMake(self.screenSize.width - _rightConstraint.constant, _topConstraint.constant);
-  _tableContainerView.alpha = 0.0f;
-  
-  [UIView animateWithDuration:0.4f animations:^
-   {
-     _tableContainerView.alpha = 1.0f;
-     _tableContainerView.transform = CGAffineTransformIdentity;
-   } completion:^(BOOL finished)
-   {
-     _hasAnimatedMenu = YES;
-   }];
+    // fade in happens by default
+    if (_menuAnimation == MenuAnimationTypeFadeIn) {
+        return;
+    }
+    
+    // don't allow it twice
+    if (_hasAnimatedMenu == YES) {
+        return;
+    }
+    
+    // thanks Shashank
+    CGAffineTransform scale = CGAffineTransformMakeScale(0.0f, 0.0f);
+    _tableContainerView.transform = CGAffineTransformConcat(scale, scale);
+    
+    _tableContainerView.layer.anchorPoint = CGPointMake(1.0f, 0.0f);
+    _tableContainerView.layer.position = CGPointMake(self.screenSize.width - _rightConstraint.constant, _topConstraint.constant);
+    _tableContainerView.alpha = 0.0f;
+    
+    [UIView animateWithDuration:0.4f animations:^
+     {
+        self->_tableContainerView.alpha = 1.0f;
+        self->_tableContainerView.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished)
+     {
+        self->_hasAnimatedMenu = YES;
+    }];
 }
 
 #pragma mark - Setup
 
 - (void)setupTable
 {
-  _itemsTableView.bounces = NO;
-  _itemsTableView.opaque = YES;
-  _itemsTableView.clipsToBounds = YES;
-  _itemsTableView.delaysContentTouches = NO;
-  _itemsTableView.tableFooterView = [[UIView alloc] init];
-  
-  Class cellClass = [UITableViewCell class];
-  [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
+    _itemsTableView.bounces = NO;
+    _itemsTableView.opaque = YES;
+    _itemsTableView.clipsToBounds = YES;
+    _itemsTableView.delaysContentTouches = NO;
+    _itemsTableView.tableFooterView = [[UIView alloc] init];
+    
+    Class cellClass = [UITableViewCell class];
+    [_itemsTableView registerClass:cellClass forCellReuseIdentifier:kCellIdentifier];
 }
 
 #pragma mark - Content view
 
 - (void)setupContentView
 {
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
-  tap.delegate = self;
-  [_contentView addGestureRecognizer:tap];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(contentViewTapped:)];
+    tap.delegate = self;
+    [_contentView addGestureRecognizer:tap];
 }
 
 - (void)contentViewTapped:(UITapGestureRecognizer *)tap
 {
-  [self hideMenu];
+    [self hideMenu];
 }
 
 - (void)hideMenu
 {
-  if (_hideMenuBlock) {
-    _hideMenuBlock();
-  }
+    if (_hideMenuBlock) {
+        _hideMenuBlock();
+    }
 }
 
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-  return [touch.view isDescendantOfView:_itemsTableView] != YES;
+    return [touch.view isDescendantOfView:_itemsTableView] != YES;
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return _items.count;
+    return _items.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-  [self customizeCell:cell atIndexPath:indexPath];
-  return cell;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+    [self customizeCell:cell atIndexPath:indexPath];
+    return cell;
 }
 
 - (void)customizeCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)idxPath
 {
-  if (_hidesSeparator) {
-    _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  }
-  else {
-    [cell setInsets:_separatorInsets];
-  }
-  
-  cell.backgroundColor = _menuBackgroundColor;
-  cell.textLabel.textColor = _itemTextColor;
-  cell.textLabel.font = _itemFont;
-  
-  UIView *background = [[UIView alloc] initWithFrame:cell.contentView.bounds];
-  background.backgroundColor = _itemHighlightedColor;
-  cell.selectedBackgroundView = background;
-  
-  ASJOverflowItem *item = _items[idxPath.row];
-  cell.textLabel.text = item.name;
-  cell.textLabel.backgroundColor = [UIColor clearColor];
-  
-  if (item.image != nil) {
-    cell.imageView.image = item.image;
-  }
-  else {
-    cell.imageView.image = nil;
-  }
-  
-  if (item.backgroundColor != nil) {
-    cell.contentView.backgroundColor = item.backgroundColor;
-  }
-  else {
-    cell.contentView.backgroundColor = nil;
-  }
+    if (_hidesSeparator) {
+        _itemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    else {
+        [cell setInsets:_separatorInsets];
+    }
+    
+    cell.backgroundColor = _menuBackgroundColor;
+    cell.textLabel.textColor = _itemTextColor;
+    cell.textLabel.font = _itemFont;
+    
+    UIView *background = [[UIView alloc] initWithFrame:cell.contentView.bounds];
+    background.backgroundColor = _itemHighlightedColor;
+    cell.selectedBackgroundView = background;
+    
+    ASJOverflowItem *item = _items[idxPath.row];
+    cell.textLabel.text = item.name;
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    
+    if (item.image != nil) {
+        cell.imageView.image = item.image;
+    }
+    else {
+        cell.imageView.image = nil;
+    }
+    
+    if (item.backgroundColor != nil) {
+        cell.contentView.backgroundColor = item.backgroundColor;
+    }
+    else {
+        cell.contentView.backgroundColor = nil;
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  return _menuItemHeight;
+    return _menuItemHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (_itemTapBlock) {
-    _itemTapBlock(_items[indexPath.row], indexPath.row);
-  }
-  
-  ASJOverflowItem *item = _items[indexPath.row];
-  if (item.itemTapBlock) {
-    item.itemTapBlock(item, indexPath.row);
-  }
-   
-  if (_delegate) {
-    [_delegate overflowMenu:self didSelectItem:_items[indexPath.row] atIndex:indexPath.row];
-  }
-  
-  [self hideMenu];
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (_itemTapBlock) {
+        _itemTapBlock(_items[indexPath.row], indexPath.row);
+    }
+    
+    ASJOverflowItem *item = _items[indexPath.row];
+    if (item.itemTapBlock) {
+        item.itemTapBlock(item, indexPath.row);
+    }
+    
+    if (_delegate) {
+        [_delegate overflowMenu:self didSelectItem:_items[indexPath.row] atIndex:indexPath.row];
+    }
+    
+    [self hideMenu];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Property setters
 
 - (void)setItems:(NSArray *)items
 {
-  _items = items;
-  [self reloadTable];
+    _items = items;
+    [self reloadTable];
 }
 
 - (void)setMenuBackgroundColor:(UIColor *)menuBackgroundColor
 {
-  _menuBackgroundColor = menuBackgroundColor;
-  [self reloadTable];
+    _menuBackgroundColor = menuBackgroundColor;
+    [self reloadTable];
 }
 
 - (void)setItemTextColor:(UIColor *)itemTextColor
 {
-  _itemTextColor = itemTextColor;
-  [self reloadTable];
+    _itemTextColor = itemTextColor;
+    [self reloadTable];
 }
 
 - (void)setItemHighlightedColor:(UIColor *)itemHighlightedColor
 {
-  _itemHighlightedColor = itemHighlightedColor;
-  [self reloadTable];
+    _itemHighlightedColor = itemHighlightedColor;
+    [self reloadTable];
 }
 
 - (void)setBorderColor:(UIColor *)borderColor
 {
-  _borderColor = borderColor;
-  _tableContainerView.layer.borderColor = borderColor.CGColor;
+    _borderColor = borderColor;
+    _tableContainerView.layer.borderColor = borderColor.CGColor;
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth
 {
-  _borderWidth = borderWidth;
-  _tableContainerView.layer.borderWidth = borderWidth;
+    _borderWidth = borderWidth;
+    _tableContainerView.layer.borderWidth = borderWidth;
 }
 
 - (void)setItemFont:(UIFont *)itemFont
 {
-  _itemFont = itemFont;
-  [self reloadTable];
+    _itemFont = itemFont;
+    [self reloadTable];
 }
 
 - (void)setHidesShadow:(BOOL)hidesShadow
 {
-  _hidesShadow = hidesShadow;
-  [self layoutIfNeeded];
+    _hidesShadow = hidesShadow;
+    [self layoutIfNeeded];
 }
 
 - (void)setDimsBackground:(BOOL)dimsBackground
 {
-  _dimsBackground = dimsBackground;
-  [self dimBackground];
+    _dimsBackground = dimsBackground;
+    [self dimBackground];
 }
 
 - (void)setDimmingLevel:(CGFloat)dimmingLevel
 {
-  NSAssert(dimmingLevel >= 0.0f && dimmingLevel <= 1.0f, @"Dimming level must range from 0 to 1.");
-  _dimmingLevel = dimmingLevel;
-  [self dimBackground];
+    NSAssert(dimmingLevel >= 0.0f && dimmingLevel <= 1.0f, @"Dimming level must range from 0 to 1.");
+    _dimmingLevel = dimmingLevel;
+    [self dimBackground];
 }
 
 - (void)dimBackground
 {
-  UIColor *color = [UIColor colorWithWhite:0.0f alpha:_dimmingLevel];
-  
-  if (!_dimsBackground) {
-    color = [UIColor clearColor];
-  }
-  _contentView.backgroundColor = color;
+    UIColor *color = [UIColor colorWithWhite:0.0f alpha:_dimmingLevel];
+    
+    if (!_dimsBackground) {
+        color = [UIColor clearColor];
+    }
+    _contentView.backgroundColor = color;
 }
 
 - (void)setMenuItemHeight:(CGFloat)menuItemHeight
 {
-  _menuItemHeight = menuItemHeight;
-  [self reloadTable];
+    _menuItemHeight = menuItemHeight;
+    [self reloadTable];
 }
 
 /**
@@ -363,53 +363,53 @@ static NSString *const kCellIdentifier = @"cell";
  */
 - (void)setWidthMultiplier:(CGFloat)widthMultiplier
 {
-  NSAssert(widthMultiplier >= 0.0f && widthMultiplier <= 1.0f, @"Width multiplier must range from 0 to 1.");
-  _widthMultiplier = widthMultiplier;
-  _widthConstraint = self.widthConstraintForMultiplier;
-  _widthConstraint.active = YES;
+    NSAssert(widthMultiplier >= 0.0f && widthMultiplier <= 1.0f, @"Width multiplier must range from 0 to 1.");
+    _widthMultiplier = widthMultiplier;
+    _widthConstraint = self.widthConstraintForMultiplier;
+    _widthConstraint.active = YES;
 }
 
 - (NSLayoutConstraint *)widthConstraintForMultiplier
 {
-  return [NSLayoutConstraint
-          constraintWithItem:_widthConstraint.firstItem
-          attribute:_widthConstraint.firstAttribute
-          relatedBy:_widthConstraint.relation
-          toItem:_widthConstraint.secondItem
-          attribute:_widthConstraint.secondAttribute
-          multiplier:_widthMultiplier
-          constant:0.0f];
+    return [NSLayoutConstraint
+            constraintWithItem:_widthConstraint.firstItem
+            attribute:_widthConstraint.firstAttribute
+            relatedBy:_widthConstraint.relation
+            toItem:_widthConstraint.secondItem
+            attribute:_widthConstraint.secondAttribute
+            multiplier:_widthMultiplier
+            constant:0.0f];
 }
 
 - (void)setMenuMargins:(MenuMargins)menuMargins
 {
-  _menuMargins = menuMargins;
-  _topConstraint.constant = menuMargins.top + kStatusBarHeight;
-  _bottomConstraint.constant = menuMargins.bottom;
-  _rightConstraint.constant = menuMargins.right;
-  
-  CGFloat menuSize = _menuItemHeight * _items.count;
-  CGFloat screenHeight =  self.screenSize.height;
-  CGFloat bottomConstant = screenHeight - menuSize - _topConstraint.constant;
-  
-  if (bottomConstant < menuMargins.bottom) {
-    bottomConstant = menuMargins.bottom;
-  }
-  
-  _bottomConstraint.constant = bottomConstant;
-  [self layoutIfNeeded];
+    _menuMargins = menuMargins;
+    _topConstraint.constant = menuMargins.top + kStatusBarHeight;
+    _bottomConstraint.constant = menuMargins.bottom;
+    _rightConstraint.constant = menuMargins.right;
+    
+    CGFloat menuSize = _menuItemHeight * _items.count;
+    CGFloat screenHeight =  self.screenSize.height;
+    CGFloat bottomConstant = screenHeight - menuSize - _topConstraint.constant;
+    
+    if (bottomConstant < menuMargins.bottom) {
+        bottomConstant = menuMargins.bottom;
+    }
+    
+    _bottomConstraint.constant = bottomConstant;
+    [self layoutIfNeeded];
 }
 
 - (void)reloadTable
 {
-  [_itemsTableView reloadData];
+    [_itemsTableView reloadData];
 }
 
 #pragma mark - Property getter
 
 - (CGSize)screenSize
 {
-  return [UIScreen mainScreen].bounds.size;
+    return [UIScreen mainScreen].bounds.size;
 }
 
 @end
