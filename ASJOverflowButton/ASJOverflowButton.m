@@ -27,14 +27,13 @@
 #import <UIKit/UINibLoading.h>
 #import <UIKit/UIScreen.h>
 #import <UIKit/UIViewController.h>
-#import <UIKit/UIWindow.h>
 
 #define kDefaultHighlightedColor [UIColor colorWithRed:217/255.0f green:217/255.0f blue:217/255.0f alpha:1.0f]
 
 @interface ASJOverflowButton ()
 
+@property (strong, nonatomic) __kindof UIViewController *vc;
 @property (strong, nonatomic) UIImage *buttonImage;
-@property (strong, nonatomic) UIWindow *overflowWindow;
 @property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
 @property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
 @property (readonly, nonatomic) UIViewAutoresizing autoresizingMasks;
@@ -46,23 +45,24 @@
 - (void)buttonTapped:(id)sender;
 - (void)showMenu;
 - (void)hideMenu;
-- (void)setupWindow;
 - (void)setupMenu;
 - (void)handleBlocks;
-- (void)destroyWindowAndMenu;
+- (void)destroyMenu;
 
 @end
 
 @implementation ASJOverflowButton
 
-- (instancetype)initWithImage:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items
+- (instancetype)initWithTarget:(__kindof UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items
 {
+    NSAssert(target, @"You must provide the controller from which the menu is to be presented.");
     NSAssert(image, @"You must provide an image for the overflow button.");
     NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
     
     self = [super init];
     if (self)
     {
+        _vc = target;
         _buttonImage = image;
         _items = items;
         [self setup];
@@ -131,7 +131,6 @@
 
 - (void)showMenu
 {
-    [self setupWindow];
     [self setupMenu];
     [self handleBlocks];
     
@@ -151,24 +150,11 @@
         self->_overflowMenu.alpha = 0.0f;
     } completion:^(BOOL finished)
      {
-        [self destroyWindowAndMenu];
+        [self destroyMenu];
     }];
 }
 
-#pragma mark - Window + menu
-
-- (void)setupWindow
-{
-    CGRect screenBounds = [UIScreen mainScreen].bounds;
-    _overflowWindow = [[UIWindow alloc] initWithFrame:screenBounds];
-    _overflowWindow.tintColor = [UIApplication sharedApplication].delegate.window.tintColor;
-    _overflowWindow.autoresizingMask = self.autoresizingMasks;
-    _overflowWindow.rootViewController = [[UIViewController alloc] init];
-    
-    UIWindow *topWindow = [UIApplication sharedApplication].windows.lastObject;
-    _overflowWindow.windowLevel = topWindow.windowLevel + 1;
-    [_overflowWindow makeKeyAndVisible];
-}
+#pragma mark - Menu
 
 - (void)setupMenu
 {
@@ -176,9 +162,9 @@
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
     _overflowMenu = (ASJOverflowMenu *)[bundle loadNibNamed:nibName owner:nil options:nil].firstObject;
-    _overflowMenu.frame = _overflowWindow.bounds;
     _overflowMenu.autoresizingMask = self.autoresizingMasks;
-    [_overflowWindow addSubview:_overflowMenu];
+    _overflowMenu.frame = _vc.view.bounds;
+    [_vc.view addSubview:_overflowMenu];
     
     // look and feel
     _overflowMenu.items = _items;
@@ -227,14 +213,12 @@
     [_overflowMenu setDelegate:_delegate];
 }
 
-- (void)destroyWindowAndMenu
+- (void)destroyMenu
 {
     @synchronized (self)
     {
         [_overflowMenu removeFromSuperview];
         _overflowMenu = nil;
-        _overflowWindow.hidden = YES;
-        _overflowWindow = nil;
     }
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -9,18 +9,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="b7t-iz-EGu" customClass="ASJOverflowMenu">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="b7t-iz-EGu" customClass="ASJOverflowMenu">
+            <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hZb-EC-wQp">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="640"/>
+                    <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                     <subviews>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGh-iJ-DVU">
-                            <rect key="frame" x="187" y="25" width="128" height="610"/>
+                            <rect key="frame" x="251.66666666666663" y="25" width="171.33333333333337" height="896"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AYQ-pj-FRP">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="610"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="171.33333333333334" height="896"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <outlet property="dataSource" destination="b7t-iz-EGu" id="IMs-XT-PbR"/>
@@ -30,7 +30,6 @@
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="AYQ-pj-FRP" firstAttribute="height" secondItem="zGh-iJ-DVU" secondAttribute="height" id="5P4-zx-jIc"/>
                                 <constraint firstItem="AYQ-pj-FRP" firstAttribute="top" secondItem="zGh-iJ-DVU" secondAttribute="top" id="B2M-2L-dq2"/>
                                 <constraint firstItem="AYQ-pj-FRP" firstAttribute="leading" secondItem="zGh-iJ-DVU" secondAttribute="leading" id="DMK-CV-iab"/>
                                 <constraint firstAttribute="bottom" secondItem="AYQ-pj-FRP" secondAttribute="bottom" id="ibK-rz-1Rp"/>
@@ -40,22 +39,11 @@
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="36K-uA-8cj"/>
-                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="CwJ-tT-lQv"/>
-                        <constraint firstAttribute="bottom" secondItem="zGh-iJ-DVU" secondAttribute="bottom" constant="5" id="Piy-jv-YSv"/>
-                        <constraint firstAttribute="trailing" secondItem="zGh-iJ-DVU" secondAttribute="trailing" constant="5" id="R5F-gh-1FG"/>
-                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="width" secondItem="hZb-EC-wQp" secondAttribute="width" multiplier="0.4" priority="750" id="T5h-Uu-P0Q"/>
-                        <constraint firstAttribute="bottom" secondItem="zGh-iJ-DVU" secondAttribute="bottom" constant="575" id="YZy-Rg-l9c"/>
-                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="sGV-9K-3M7"/>
-                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hZb-EC-wQp" secondAttribute="leading" constant="5" id="tBR-UP-ZHF"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="top" secondItem="hZb-EC-wQp" secondAttribute="top" constant="25" id="SqT-aG-uUB"/>
+                        <constraint firstItem="zGh-iJ-DVU" firstAttribute="width" secondItem="hZb-EC-wQp" secondAttribute="width" multiplier="0.4" id="UzV-1w-zTI"/>
+                        <constraint firstAttribute="bottom" secondItem="zGh-iJ-DVU" secondAttribute="bottom" constant="5" id="Vrs-ck-wT0"/>
+                        <constraint firstAttribute="trailing" secondItem="zGh-iJ-DVU" secondAttribute="trailing" constant="5" id="xQf-JB-Eeh"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="CwJ-tT-lQv"/>
-                            <exclude reference="YZy-Rg-l9c"/>
-                            <exclude reference="sGV-9K-3M7"/>
-                        </mask>
-                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -68,15 +56,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="bottomConstraint" destination="Piy-jv-YSv" id="9Kb-yn-QwR"/>
+                <outlet property="bottomConstraint" destination="Vrs-ck-wT0" id="p8f-yw-SWj"/>
                 <outlet property="contentView" destination="hZb-EC-wQp" id="HwN-Wd-XHo"/>
                 <outlet property="itemsTableView" destination="AYQ-pj-FRP" id="dqc-4b-OBD"/>
-                <outlet property="rightConstraint" destination="R5F-gh-1FG" id="J6x-Y8-z91"/>
+                <outlet property="rightConstraint" destination="xQf-JB-Eeh" id="FqS-Lr-88E"/>
                 <outlet property="tableContainerView" destination="zGh-iJ-DVU" id="4vS-L7-T3a"/>
-                <outlet property="topConstraint" destination="sGV-9K-3M7" id="YRt-jD-M0s"/>
-                <outlet property="widthConstraint" destination="T5h-Uu-P0Q" id="1bK-Ck-uVY"/>
+                <outlet property="topConstraint" destination="SqT-aG-uUB" id="NQP-ra-AiQ"/>
+                <outlet property="widthConstraint" destination="UzV-1w-zTI" id="byU-K5-Tin"/>
             </connections>
-            <point key="canvasLocation" x="389" y="388"/>
+            <point key="canvasLocation" x="388.31775700934577" y="387.47300215982722"/>
         </view>
     </objects>
 </document>

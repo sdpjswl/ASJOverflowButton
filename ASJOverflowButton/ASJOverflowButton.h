@@ -133,7 +133,7 @@ typedef void (^HideMenuBlock)(void);
  *
  *  @return An instance of ASJOverflowButton.
  */
-- (instancetype)initWithImage:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTarget:(__kindof UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Don't allow user to use "init".
