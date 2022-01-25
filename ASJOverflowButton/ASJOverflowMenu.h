@@ -60,7 +60,18 @@ static inline SeparatorInsets SeparatorInsetsMake(CGFloat left, CGFloat right)
   return insets;
 }
 
+@class ASJOverflowMenu;
+
+@protocol ASJOverflowMenuDelegate <NSObject>
+- (void)overflowMenu:(ASJOverflowMenu *)sender didSelectItem:(ASJOverflowItem *)item atIndex:(NSUInteger)idx;
+@end
+
 @interface ASJOverflowMenu : UIView
+
+/**
+ *  Called in response to menu item selection. Optional.
+ */
+@property (nullable, weak, nonatomic) id <ASJOverflowMenuDelegate> delegate;
 
 /**
  *  An array of ASJOverflowItems to show on the menu.

@@ -265,6 +265,9 @@ static NSString *const kCellIdentifier = @"cell";
   if (_itemTapBlock) {
     _itemTapBlock(_items[indexPath.row], indexPath.row);
   }
+  if (_delegate) {
+    [_delegate overflowMenu:self didSelectItem:_items[indexPath.row] atIndex:indexPath.row];
+  }
   [self hideMenu];
   [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
