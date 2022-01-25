@@ -365,9 +365,11 @@ static NSString *const kCellIdentifier = @"cell";
 {
     NSAssert(widthMultiplier >= 0.0f && widthMultiplier <= 1.0f, @"Width multiplier must range from 0 to 1.");
     _widthMultiplier = widthMultiplier;
-    _widthConstraint.active = NO;
-    _widthConstraint = self.widthConstraintForMultiplier;
-    _widthConstraint.active = YES;
+    
+    NSLayoutConstraint *c = self.widthConstraintForMultiplier;
+    [NSLayoutConstraint deactivateConstraints:@[_widthConstraint]];
+    _widthConstraint = c;
+    [NSLayoutConstraint activateConstraints:@[_widthConstraint]];
 }
 
 - (NSLayoutConstraint *)widthConstraintForMultiplier
