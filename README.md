@@ -43,6 +43,16 @@ Sets the text color of the menu items. Defaults to black.
 Sets the menu item's background color when tapped. Defaults to RGB (217, 217, 217).
 
 ```objc
+@property (nullable, strong, nonatomic) UIColor *borderColor;
+```
+Sets the color of border for the menu. Defaults to gray.
+
+```objc
+@property (assign, nonatomic) CGFloat borderWidth;
+```
+Sets the width of the menu's border. Defaults to zero.
+
+```objc
 @property (nullable, strong, nonatomic) UIFont *itemFont;
 ```
 Sets the font of the menu items. Defaults to system font of size 17 pts.
@@ -111,6 +121,7 @@ Can only show the overflow menu on the top right corner of the screen. From [rel
 # Credits
 
 - To [Shashank Pali](https://github.com/shashankpali) to make the menu zoom in code work - Read a [blog post](http://shashankpali.weebly.com/posts/scale-view-from-anywhere-cgaffinetransform) about it
+- To [Ken M. Haggerty](https://github.com/kenmhaggerty) for adding new features and logic
 - [UITableView passes touch events to superview when it shouldn't](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt)
 - [Can i change multiplier property for NSLayoutConstraint?](http://stackoverflow.com/questions/19593641/can-i-change-multiplier-property-for-nslayoutconstraint#comment54574185_27831003)
 - [Which is the best way to suppress “unused variable” warning?](http://stackoverflow.com/questions/17622237/which-is-the-best-way-to-suppress-unused-variable-warning)
