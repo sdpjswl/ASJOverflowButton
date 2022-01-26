@@ -15,7 +15,7 @@ pod 'ASJOverflowButton'
 Use the designated initializer to create the button, like so:
 
 ```objc
-ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithImage:anImage items:someItems];
+ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithTarget:aController title:@"An optional title" image:anOptionalImage button:anOptionalButton items:_overflowItems];
 self.navigationItem.rightBarButtonItem = overflowButton;
 ```
 
@@ -122,6 +122,8 @@ Can only show the overflow menu on the top right corner of the screen. From [rel
 
 - To [Shashank Pali](https://github.com/shashankpali) to make the menu zoom in code work - Read a [blog post](http://shashankpali.weebly.com/posts/scale-view-from-anywhere-cgaffinetransform) about it
 - To [Ken M. Haggerty](https://github.com/kenmhaggerty) for adding new features and logic
+- To [Vishal Deshai](https://github.com/vishaldeshai) for helping fix RTL issue
+- to [Fuzzball](https://github.com/fuzzball1980) for helping implement custom buttons
 - [UITableView passes touch events to superview when it shouldn't](http://stackoverflow.com/questions/11570160/uitableview-passes-touch-events-to-superview-when-it-shouldnt)
 - [Can i change multiplier property for NSLayoutConstraint?](http://stackoverflow.com/questions/19593641/can-i-change-multiplier-property-for-nslayoutconstraint#comment54574185_27831003)
 - [Which is the best way to suppress “unused variable” warning?](http://stackoverflow.com/questions/17622237/which-is-the-best-way-to-suppress-unused-variable-warning)
