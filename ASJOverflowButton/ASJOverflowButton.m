@@ -24,6 +24,7 @@
 #import "ASJOverflowButton.h"
 #import <QuartzCore/CALayer.h>
 #import <UIKit/UIButton.h>
+#import <UIKit/UIImageView.h>
 #import <UIKit/UINibLoading.h>
 #import <UIKit/UIScreen.h>
 #import <UIKit/UIViewController.h>
@@ -33,6 +34,8 @@
 @interface ASJOverflowButton ()
 
 @property (strong, nonatomic) __kindof UIViewController *vc;
+@property (copy, nonatomic) NSString *buttonTitle;
+@property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) UIImage *buttonImage;
 @property (strong, nonatomic) ASJOverflowMenu *overflowMenu;
 @property (copy, nonatomic) NSArray<ASJOverflowItem *> *items;
@@ -53,17 +56,18 @@
 
 @implementation ASJOverflowButton
 
-- (instancetype)initWithTarget:(__kindof UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items
+- (instancetype)initWithTarget:(__kindof UIViewController *)target title:(NSString *)title image:(UIImage *)image button:(UIButton *)button items:(NSArray<ASJOverflowItem *> *)items
 {
     NSAssert(target, @"You must provide the controller from which the menu is to be presented.");
-    NSAssert(image, @"You must provide an image for the overflow button.");
     NSAssert(items.count, @"You must provide at least one ASJOverflowItem.");
     
     self = [super init];
     if (self)
     {
         _vc = target;
+        _buttonTitle = title;
         _buttonImage = image;
+        _button = button;
         _items = items;
         [self setup];
     }
@@ -112,14 +116,26 @@
 
 - (void)setupCustomView
 {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    SEL selector = @selector(buttonTapped:);
     
-    button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
-    button.autoresizingMask = self.autoresizingMasks;
-    [button setImage:_buttonImage forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    // if image and button, both not provided
+    if (_buttonImage == nil && _button == nil)
+    {
+        self.title = _buttonTitle ? _buttonTitle : @"Open";
+        self.target = self;
+        self.action = selector;
+    }
+    // if image provided
+    else if (_buttonImage != nil)
+    {
+        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button.frame = CGRectMake(0.0f, 0.0f, 44.0f, 44.0f);
+        _button.autoresizingMask = self.autoresizingMasks;
+        [_button setImage:_buttonImage forState:UIControlStateNormal];
+    }
     
-    self.customView = button;
+    [_button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
+    self.customView = _button;
 }
 
 - (void)buttonTapped:(id)sender

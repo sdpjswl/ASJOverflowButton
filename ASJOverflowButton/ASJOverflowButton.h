@@ -125,15 +125,17 @@ typedef void (^HideMenuBlock)(void);
 @property (nullable, copy) HideMenuBlock hideMenuBlock;
 
 /**
- *  The designated initializer.
+ *  The designated initializer. You can use either title, image or button. Just pass nil for what you don't require.
  *
  *  @param target A UIViewController to show the overflow menu on.
- *  @param image  The overflow buttn's image.
+ *  @param title  The overflow button's title. Used if image and button are not provided. Defaults to "Open",
+ *  @param image  The overflow button's image.
+ *  @param button A custom UIButton to show on the navigation bar.
  *  @param items  An array of ASJOverflowItems to show on the menu.
  *
  *  @return An instance of ASJOverflowButton.
  */
-- (instancetype)initWithTarget:(__kindof UIViewController *)target image:(UIImage *)image items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithTarget:(__kindof UIViewController *)target title:(nullable NSString *)title image:(nullable UIImage *)image button:(nullable UIButton *)button items:(NSArray<ASJOverflowItem *> *)items NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Don't allow user to use "init".
