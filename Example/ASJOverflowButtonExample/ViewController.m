@@ -70,7 +70,6 @@
     [button.widthAnchor constraintEqualToConstant:25].active = YES;
     [button.heightAnchor constraintEqualToConstant:25].active = YES;
     [button setImage:image forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(test) forControlEvents:UIControlStateNormal];
     
     _overflowButton = [[ASJOverflowButton alloc] initWithTarget:self.navigationController title:@"My Button" image:nil button:button items:_overflowItems];
     
