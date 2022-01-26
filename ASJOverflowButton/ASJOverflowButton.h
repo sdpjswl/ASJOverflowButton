@@ -187,7 +187,7 @@ typedef void (^HideMenuBlock)(void);
  *  A convenience constructor to create ASJOverflowItems.
  *
  *  @param name  The overflow item's name.
- *  @param itemtapBlock  A block that gets called when the overflow item is tapped. Optional.
+ *  @param itemTapBlock  A block that gets called when the overflow item is tapped. Optional.
  *
  *  @return An instance of ASJOverflowItem.
  */
@@ -198,7 +198,7 @@ typedef void (^HideMenuBlock)(void);
  *
  *  @param name  The overflow item's name.
  *  @param image The overflow item's image. Optional.
- *  @param image The overflow item's background color. Optional.
+ *  @param backgroundColor The overflow item's background color. Optional.
  *
  *  @return An instance of ASJOverflowItem.
  */
