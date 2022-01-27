@@ -18,7 +18,6 @@ Use the designated initializer to create the button, like so:
 ASJOverflowButton *overflowButton = [[ASJOverflowButton alloc] initWithTarget:aController title:@"An optional title" image:anOptionalImage button:anOptionalButton items:_overflowItems];
 self.navigationItem.rightBarButtonItem = overflowButton;
 ```
-
 The items need to be on type `ASJOverflowItem`. Constructor method is provided to generate them. Just attach an array of these during initialization.
 
 ```objc
